@@ -5,7 +5,6 @@ rotation.py
 
 """
 import utime
-import random
 from machine import Pin, SPI
 import gc9a01
 import vga1_bold_16x32 as font

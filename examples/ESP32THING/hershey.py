@@ -3,14 +3,11 @@ hershey.py
     Draw greetings on display cycling thru hershey fonts and colors
 '''
 
-import sys
 import utime
 from machine import SPI, Pin
 import gc9a01
-import random
 
 # Load several frozen fonts from flash
-
 
 import greeks
 import italicc
@@ -62,8 +59,10 @@ def main():
     Draw greetings on display cycling thru hershey fonts and colors
     '''
     try:
+        spi = SPI(2, baudrate=60000000, sck=Pin(18), mosi=Pin(23))
+
         tft = gc9a01.GC9A01(
-            SPI(2, baudrate=60000000, sck=Pin(18), mosi=Pin(23)),
+            spi,
             240,
             240,
             reset=Pin(33, Pin.OUT),

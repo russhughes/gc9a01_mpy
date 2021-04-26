@@ -1,8 +1,7 @@
 """
 hello.py
 
-    Writes "Hello!" in random colors at random locations on a
-    M5Stack core display.
+    Writes "Hello!" in random colors at random locations on the display.
 
 """
 import time

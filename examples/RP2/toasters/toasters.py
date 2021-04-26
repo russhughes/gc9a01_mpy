@@ -22,7 +22,7 @@ import time
 import random
 from machine import Pin, SPI
 import gc9a01
-import t1,t2,t3,t4,t5
+import t1, t2, t3, t4, t5
 
 TOASTERS = [t1, t2, t3, t4]
 TOAST = [t5]

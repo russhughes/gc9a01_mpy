@@ -1,8 +1,7 @@
 '''
 bitarray.py
 
-    An example using map_bitarray_to_rgb565 to draw sprites on the
-    M5Stack Core Display.
+    An example using map_bitarray_to_rgb565 to draw sprites on the Display.
 
 '''
 
@@ -108,6 +107,7 @@ class pacman():
 
         self.x %= 223
 
+
 def main():
     '''
     Draw on screen using map_bitarray_to_rgb565
@@ -175,5 +175,6 @@ def main():
         # shutdown spi
         if 'spi' in locals():
             spi.deinit()
+
 
 main()

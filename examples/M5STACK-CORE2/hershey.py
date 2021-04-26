@@ -3,14 +3,11 @@ hershey.py
     Draw greetings on display cycling thru hershey fonts and colors
 '''
 
-import sys
 import utime
 from machine import SPI, Pin
 import gc9a01
-import random
 
 # Load several frozen fonts from flash
-
 
 import greeks
 import italicc

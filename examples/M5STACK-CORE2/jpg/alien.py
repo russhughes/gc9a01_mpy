@@ -36,7 +36,7 @@ def main():
         dc=Pin(21, Pin.OUT),
         backlight=Pin(14, Pin.OUT),
         rotation=0)
-        
+
     # enable display and clear screen
     tft.init()
 

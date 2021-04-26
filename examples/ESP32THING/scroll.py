@@ -1,14 +1,13 @@
 """
 scroll.py
 
-    Smoothly scroll all characters in a font up the M5Stack Core Display.
+    Smoothly scroll all characters in a font up the Display.
     Fonts heights must be even multiples of the screen height
     (i.e. 8 or 16 pixels high).
 
 """
 
 import utime
-import random
 from machine import Pin, SPI
 
 import gc9a01
@@ -98,5 +97,6 @@ def main():
         scroll %= height
 
         utime.sleep(0.01)
+
 
 main()

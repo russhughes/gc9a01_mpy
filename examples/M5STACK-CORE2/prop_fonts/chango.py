@@ -13,9 +13,9 @@ import chango_64 as font_64
 def main():
 
     try:
-
+        spi = SPI(2, baudrate=60000000, sck=Pin(18), mosi=Pin(23))
         tft = gc9a01.GC9A01(
-            SPI(2, baudrate=60000000, sck=Pin(18), mosi=Pin(23)),
+            spi,
             240,
             240,
             reset=Pin(26, Pin.OUT),

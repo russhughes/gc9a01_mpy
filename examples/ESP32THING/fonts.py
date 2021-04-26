@@ -1,11 +1,10 @@
 """
 fonts.py
 
-    Pages through all characters of four fonts on the M5Stack Display.
+    Pages through all characters of four fonts on the Display.
 
 """
 import utime
-import random
 from machine import Pin, SPI
 import gc9a01
 
@@ -64,4 +63,6 @@ def main():
                         col = 0
 
             utime.sleep(3)
+
+
 main()

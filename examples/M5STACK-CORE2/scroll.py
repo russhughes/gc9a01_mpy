@@ -8,7 +8,6 @@ scroll.py
 """
 
 import utime
-import random
 from machine import Pin, SPI
 
 import gc9a01
@@ -99,5 +98,6 @@ def main():
         scroll %= height
 
         utime.sleep(0.01)
+
 
 main()

@@ -68,7 +68,7 @@ typedef struct _gc9a01_GC9A01_obj_t {
 	mp_file_t *fp;				// file object
 	uint16_t *i2c_buffer;		// resident buffer if buffer_size given
     void *work;                 // work buffer for jpg decoding
-	uint16_t buffer_size;       // resident buffer size, 0=dynamic
+	uint32_t buffer_size;       // resident buffer size, 0=dynamic
     uint16_t display_width;     // physical width
     uint16_t width;             // logical width (after rotation)
     uint16_t display_height;    // physical width

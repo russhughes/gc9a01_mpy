@@ -18,8 +18,6 @@ def main():
     spi = SPI(2, baudrate=60000000, sck=Pin(18), mosi=Pin(23))
     tft = gc9a01.GC9A01(
         spi,
-        240,
-        240,
         reset=Pin(26, Pin.OUT),
         cs=Pin(13, Pin.OUT),
         dc=Pin(21, Pin.OUT),

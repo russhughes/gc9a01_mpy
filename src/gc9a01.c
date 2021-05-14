@@ -723,7 +723,7 @@ STATIC mp_obj_t gc9a01_GC9A01_bitmap(size_t n_args, const mp_obj_t *args) {
 	mp_get_buffer_raise(bitmap_data_buff, &bufinfo, MP_BUFFER_READ);
 	bitmap_data = bufinfo.buf;
 
-	uint16_t buf_size = width * height * 2;
+	uint32_t buf_size = width * height * 2;
 	if (self->buffer_size == 0) {
 		self->i2c_buffer = m_malloc(buf_size);
 	}
@@ -830,7 +830,7 @@ STATIC mp_obj_t gc9a01_GC9A01_pbitmap(size_t n_args, const mp_obj_t *args) {
         bs_bit = (ofs_data[idx*2] << 8) + ofs_data[idx*2+1];
         width = widths[idx];
 
-        uint16_t buf_size = width * height * 2;
+        uint32_t buf_size = width * height * 2;
 	    if (self->buffer_size == 0) {
 		    self->i2c_buffer = m_malloc(buf_size);
 	    }
@@ -904,7 +904,7 @@ STATIC mp_obj_t gc9a01_GC9A01_text(size_t n_args, const mp_obj_t *args) {
         bg_color = _swap_bytes(BLACK);
 
     uint8_t wide = width / 8;
-    uint16_t buf_size = width * height * 2;
+    uint32_t buf_size = width * height * 2;
 
 	if (self->buffer_size == 0) {
 		self->i2c_buffer = m_malloc(buf_size);

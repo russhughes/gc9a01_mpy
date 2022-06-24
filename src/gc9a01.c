@@ -1570,4 +1570,8 @@ const mp_obj_module_t mp_module_gc9a01 = {
     .globals = (mp_obj_dict_t*)&mp_module_gc9a01_globals,
 };
 
+#if MICROPY_VERSION >= 0x011300 // MicroPython 1.19 or later
+MP_REGISTER_MODULE(MP_QSTR_gc9a01, mp_module_gc9a01);
+#else
 MP_REGISTER_MODULE(MP_QSTR_gc9a01, mp_module_gc9a01, MODULE_GC9A01_ENABLED);
+#endif

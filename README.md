@@ -22,7 +22,7 @@ The firmware directory contains pre-compiled firmware for various devices with
 the gc9a01 C driver and frozen python font files. See the README.md file in the
 fonts folder for more information on the font files.
 
-MicroPython v1.15 compiled with ESP IDF v4.2 using CMake
+MicroPython v1.19.1-60-ge22b7fb4a compiled with ESP IDF v4.4 using CMake
 
 Directory                       | File         | Device
 ------------------------------- | ------------ | ----------------------------------
@@ -96,7 +96,7 @@ Additional build parameters may be specified during the build, erase and upload 
 
 ## Working examples
 
-This module was tested on ESP32 and the Raspberry Pi Pico. You need to provide a `SPI` object and the pin to use for 
+This module was tested on ESP32 and the Raspberry Pi Pico. You need to provide a `SPI` object and the pin to use for
 the DC pin of the screen.
 
 
@@ -250,7 +250,7 @@ This driver supports only 16bit colors in RGB565 notation.
   calculate the offset to the beginning of the desired bitmap using the modules
   HEIGHT, WIDTH and BPP values.
 
-  The `imgtobitmap.py` utility creates compatible 1 to 8 bit per pixel bitmap 
+  The `imgtobitmap.py` utility creates compatible 1 to 8 bit per pixel bitmap
   modules from image files using the Pillow Python Imaging Library.
 
   The `monofont2bitmap.py` utility creates compatible 1 to 8 bit per pixel

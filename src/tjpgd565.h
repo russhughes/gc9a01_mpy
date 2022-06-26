@@ -33,12 +33,10 @@ typedef enum {
 } JRESULT;
 
 
-
 /* Rectangular structure */
 typedef struct {
 	uint16_t left, right, top, bottom;
 } JRECT;
-
 
 
 /* Decompressor object structure */
@@ -52,7 +50,7 @@ struct JDEC {
 	uint8_t msx, msy;			/* MCU size in unit of block (width, height) */
 	uint8_t qtid[3];			/* Quantization table ID of each component */
 	int16_t dcv[3];				/* Previous DC element of each component */
-	uint16_t nrst;				/* Restart inverval */
+	uint16_t nrst;				/* Restart interval */
 	uint16_t width, height;		/* Size of the input image (pixel) */
 	uint8_t* huffbits[2][2];	/* Huffman bit distribution tables [id][dcac] */
 	uint16_t* huffcode[2][2];	/* Huffman code word tables [id][dcac] */
@@ -61,9 +59,11 @@ struct JDEC {
 	void* workbuf;				/* Working buffer for IDCT and RGB output */
 	uint8_t* mcubuf;			/* Working buffer for the MCU */
 	void* pool;					/* Pointer to available memory pool */
-	unsigned int sz_pool;		/* Size of momory pool (bytes available) */
+	unsigned int sz_pool;		/* Size of memory pool (bytes available) */
 	unsigned int (*infunc)(JDEC*, uint8_t*, unsigned int);	/* Pointer to jpeg stream input function */
-	void* device;				/* Pointer to I/O device identifiler for the session */
+	void* device;				/* Pointer to I/O device identifier for the session */
+	uint16_t x_offs;			/* x offset for slow method */
+	uint16_t y_offs;			/* y offset for slow method */
 };
 
 

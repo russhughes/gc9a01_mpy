@@ -1343,7 +1343,13 @@ static int out_slow (       // 1:Ok, 0:Aborted
 
 	// blit buffer to display
 
-	set_window(self, rect->left, rect->top, rect->right, rect->bottom);
+    set_window(
+		self,
+		rect->left + jd->x_offs,
+		rect->top + jd->y_offs,
+		rect->right + jd->x_offs,
+		rect->bottom + jd->y_offs);
+
 	DC_HIGH();
 	CS_LOW();
 	write_spi(self->spi_obj, (uint8_t *) dev->fbuf, wx2 * h);
@@ -1388,6 +1394,8 @@ STATIC mp_obj_t gc9a01_GC9A01_jpg(size_t n_args, const mp_obj_t *args) {
 			} else {
 				bufsize = 2 * jdec.msx*8 * jdec.msy*8;
 				outfunc = out_slow;
+                jdec.x_offs = x;
+				jdec.y_offs = y;
 			}
 			if (self->buffer_size && bufsize > self->buffer_size)
 				mp_raise_msg(&mp_type_OSError, MP_ERROR_TEXT("buffer too small"));

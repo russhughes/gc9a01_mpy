@@ -15,11 +15,8 @@ convert toasters.bmp -crop 64x64+320+0 t5.png
 
 # use 3 bits per pixel / 8 colors
 
-./imgtobits.py t1.png 3 >t1.py
-./imgtobits.py t2.png 3 >t2.py
-./imgtobits.py t3.png 3 >t3.py
-./imgtobits.py t4.png 3 >t4.py
-./imgtobits.py t5.png 3 >t5.py
-
-cp -v t[12345].py ../examples
-
+./imgtobitmap.py t1.png 3 >t1.py
+./imgtobitmap.py t2.png 3 >t2.py
+./imgtobitmap.py t3.png 3 >t3.py
+./imgtobitmap.py t4.png 3 >t4.py
+./imgtobitmap.py t5.png 3 >t5.py

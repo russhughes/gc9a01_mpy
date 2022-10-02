@@ -5,6 +5,7 @@
     Usage imgtobitmap image_file bits_per_pixel >image.py
 '''
 
+import sys
 from PIL import Image
 import argparse
 
@@ -28,15 +29,21 @@ def main():
         help='The number of bits to use per pixel (1..8)')
 
     args = parser.parse_args()
-
     bits = args.bits_per_pixel
+    colors_requested = 1 << bits
     img = Image.open(args.image_file)
-    img = img.convert("P", palette=Image.ADAPTIVE, colors=2**bits)
+    img = img.convert("P", palette=Image.Palette.ADAPTIVE, colors=colors_requested)
     palette = img.getpalette()  # Make copy of palette colors
+    palette_colors = len(palette) // 3
+    bits_required = palette_colors.bit_length()
+    if (bits_required < bits):
+        print(f'\nNOTE: Quantization reduced colors to {palette_colors} from the {colors_requested} '
+        f'requested, reconverting using {bits_required} bit per pixel could save memory.\n''', file=sys.stderr)
 
     # For all the colors in the palette
     colors = []
-    for color in range(1 << bits):
+
+    for color in range(palette_colors):
 
         # get rgb values and convert to 565
         color565 = (
@@ -59,9 +66,11 @@ def main():
         for x in range(img.width):
             pixel = img.getpixel((x, y))
             color = pixel
-            bstring = ''
-            for bit in range(bits, 0, -1):
-                bstring += '1' if (color & (1 << bit-1)) else '0'
+            bstring = ''.join(
+                '1' if (color & (1 << bit - 1)) else '0'
+                for bit in range(bits, 0, -1)
+            )
+
             image_bitstring += bstring
 
     bitmap_bits = len(image_bitstring)

@@ -56,7 +56,11 @@
 
 
 STATIC void write_spi(mp_obj_base_t *spi_obj, const uint8_t *buf, int len) {
-    mp_machine_spi_p_t *spi_p = (mp_machine_spi_p_t*)spi_obj->type->protocol;
+#if MICROPY_OBJ_TYPE_REPR == MICROPY_OBJ_TYPE_REPR_SLOT_INDEX
+	mp_machine_spi_p_t *spi_p = (mp_machine_spi_p_t *) MP_OBJ_TYPE_GET_SLOT(spi_obj->type, protocol);
+#else
+	mp_machine_spi_p_t *spi_p = (mp_machine_spi_p_t *) spi_obj->type->protocol;
+#endif
     spi_p->transfer(spi_obj, len, buf, NULL);
 }
 
@@ -1476,6 +1480,18 @@ STATIC const mp_rom_map_elem_t gc9a01_GC9A01_locals_dict_table[] = {
 STATIC MP_DEFINE_CONST_DICT(gc9a01_GC9A01_locals_dict, gc9a01_GC9A01_locals_dict_table);
 /* methods end */
 
+#if MICROPY_OBJ_TYPE_REPR == MICROPY_OBJ_TYPE_REPR_SLOT_INDEX
+
+MP_DEFINE_CONST_OBJ_TYPE(
+	gc9a01_GC9A01_type,
+	MP_QSTR_GC9A01,
+	MP_TYPE_FLAG_NONE,
+	print, gc9a01_GC9A01_print,
+	make_new, gc9a01_GC9A01_make_new,
+	locals_dict, &gc9a01_GC9A01_locals_dict
+);
+
+#else
 
 const mp_obj_type_t gc9a01_GC9A01_type = {
     { &mp_type_type },
@@ -1484,6 +1500,10 @@ const mp_obj_type_t gc9a01_GC9A01_type = {
     .make_new = gc9a01_GC9A01_make_new,
     .locals_dict = (mp_obj_dict_t*)&gc9a01_GC9A01_locals_dict,
 };
+
+#endif
+
+
 
 mp_obj_t gc9a01_GC9A01_make_new(const mp_obj_type_t *type,
                                 size_t n_args,

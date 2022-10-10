@@ -1,4 +1,4 @@
-#!python3
+#!/usr/bin/env python3
 '''
     Convert image file to python module for use with blit_bitmap.
 
@@ -58,7 +58,7 @@ def main():
         colors.append(f'{color:04x}')
 
     image_bitstring = ''
-    max_colors = 1 << bits
+    max_colors = len()
 
     # Run through the image and create a string with the ascii binary
     # representation of the color of each pixel.

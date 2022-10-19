@@ -22,7 +22,7 @@ The firmware directory contains pre-compiled firmware for various devices with
 the gc9a01 C driver and frozen python font files. See the README.md file in the
 fonts folder for more information on the font files.
 
-MicroPython v1.19.1-60-ge22b7fb4a compiled with ESP IDF v4.4 using CMake
+MicroPython v1.19.1-543 compiled with ESP IDF v4.4 using CMake
 
 Directory                       | File         | Device
 ------------------------------- | ------------ | ----------------------------------
@@ -265,6 +265,11 @@ This driver supports only 16bit colors in RGB565 notation.
   one may be used to create antialiased characters at the expense of memory use.
   If you specify a buffer_size during the display initialization it must be
   large enough to hold the one character (HEIGHT * WIDTH * 2).
+
+- `GC9A01.pbitmap(bitmap, x , y [, index])`
+
+  Progressive version of `bitmap` that draws the bitmap one line at a time allowing
+  you to draw a bitmap that is larger than available memory.
 
 - `GC9A01.width()`
 

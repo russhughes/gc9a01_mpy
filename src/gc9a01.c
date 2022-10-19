@@ -699,7 +699,7 @@ STATIC mp_obj_t gc9a01_GC9A01_bitmap(size_t n_args, const mp_obj_t *args) {
 	mp_int_t		 y			 = mp_obj_get_int(args[3]);
 
     mp_int_t idx;
-    if (n_args > 3) {
+    if (n_args > 4) {
         idx = mp_obj_get_int(args[4]);
     } else {
         idx = 0;
@@ -767,102 +767,77 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_bitmap_obj, 4, 5, gc9a0
 
 
 STATIC mp_obj_t gc9a01_GC9A01_pbitmap(size_t n_args, const mp_obj_t *args) {
-	char single_char_s[2] = { 0, 0};
-    const char *str;
-
-    gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
+	gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
 
 	mp_obj_module_t *bitmap		 = MP_OBJ_TO_PTR(args[1]);
+	mp_int_t		 x			 = mp_obj_get_int(args[2]);
+	mp_int_t		 y			 = mp_obj_get_int(args[3]);
 
-    if (mp_obj_is_int(args[2])) {
-        mp_int_t c = mp_obj_get_int(args[2]);
-        single_char_s[0] = c & 0xff;
-        str = single_char_s;
+    mp_int_t idx;
+    if (n_args > 4) {
+        idx = mp_obj_get_int(args[4]);
     } else {
-        str = mp_obj_str_get_str(args[2]);
+        idx = 0;
     }
-
-	mp_int_t		 x			 = mp_obj_get_int(args[3]);
-	mp_int_t		 y			 = mp_obj_get_int(args[4]);
 
 	mp_obj_dict_t *	 dict		 = MP_OBJ_TO_PTR(bitmap->globals);
 	const uint16_t	 height		 = mp_obj_get_int(mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_HEIGHT)));
-	const char *     map         = mp_obj_str_get_str(mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_MAP)));
-    uint16_t         bitmaps     = strlen(map);
+	const uint16_t	 width		 = mp_obj_get_int(mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_WIDTH)));
+    uint16_t         bitmaps     = 0;
 	const uint8_t	 bpp		 = mp_obj_get_int(mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_BPP)));
 	mp_obj_t *		 palette_arg = mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_PALETTE));
 	mp_obj_t *		 palette	 = NULL;
 	size_t			 palette_len = 0;
 
-    // OFFSETS - 16 bit ints
-    mp_obj_t ofs_data_buff = mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_OFFSETS));
-    mp_buffer_info_t ofs_bufinfo;
-    mp_get_buffer_raise(ofs_data_buff, &ofs_bufinfo, MP_BUFFER_READ);
-    const uint8_t *ofs_data = ofs_bufinfo.buf;
-
-    // WIDTHS - 8 bit bytes
-    mp_obj_t widths_data_buff = mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_WIDTHS));
-    mp_buffer_info_t widths_bufinfo;
-    mp_get_buffer_raise(widths_data_buff, &widths_bufinfo, MP_BUFFER_READ);
-    const uint8_t *widths = widths_bufinfo.buf;
+    mp_map_elem_t *elem = dict_lookup(bitmap->globals, MP_OBJ_NEW_QSTR(MP_QSTR_BITMAPS));
+    if (elem) {
+        bitmaps = mp_obj_get_int(elem);
+    }
 
 	mp_obj_get_array(palette_arg, &palette_len, &palette);
 
 	mp_obj_t *		 bitmap_data_buff = mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_BITMAP));
-	mp_buffer_info_t bitmap_bufinfo;
-	mp_get_buffer_raise(bitmap_data_buff, &bitmap_bufinfo, MP_BUFFER_READ);
-	bitmap_data = bitmap_bufinfo.buf;
+	mp_buffer_info_t bufinfo;
 
-	uint32_t ofs = 0;
-    uint16_t idx = 0;
-    uint8_t chr;
-    uint8_t width = 0;
+	mp_get_buffer_raise(bitmap_data_buff, &bufinfo, MP_BUFFER_READ);
+	bitmap_data = bufinfo.buf;
 
-    while ((chr = *str++)) {
-        idx = 0;
-
-        while (idx < bitmaps) {
-            if (map[idx] == chr)
-                break;
-            idx++;
-        }
-
-        if (idx > bitmaps ) {
-            mp_raise_msg(&mp_type_OSError, MP_ERROR_TEXT("index out of range"));
-        }
-
-        bs_bit = (ofs_data[idx*2] << 8) + ofs_data[idx*2+1];
-        width = widths[idx];
-
-        uint32_t buf_size = width * height * 2;
-	    if (self->buffer_size == 0) {
-		    self->i2c_buffer = m_malloc(buf_size);
-	    }
-
-        for (int yy = 0; yy < height; yy++) {
-            for (int xx = 0; xx < width; xx++) {
-                self->i2c_buffer[ofs++] = mp_obj_get_int(palette[get_color(bpp)]);
-            }
-        }
-
-        uint16_t x1 = x + width - 1;
-        if (x1 < self->width) {
-            set_window(self, x, y, x1, y + height - 1);
-            DC_HIGH();
-            CS_LOW();
-            write_spi(self->spi_obj, (uint8_t *) self->i2c_buffer, buf_size);
-            CS_HIGH();
-        }
-
-	    if (self->buffer_size == 0) {
-		    m_free(self->i2c_buffer);
-        }
+	uint32_t buf_size = width * 2;
+	if (self->buffer_size == 0) {
+		self->i2c_buffer = m_malloc(buf_size);
 	}
 
+    bs_bit = 0;
+    if (bitmaps) {
+        if (idx < bitmaps ) {
+            bs_bit = height * width * bpp * idx;
+        } else {
+            mp_raise_msg(&mp_type_OSError, MP_ERROR_TEXT("index out of range"));
+        }
+    }
+
+    uint16_t x1 = x + width - 1;
+
+	for (int yy = 0; yy < height; yy++) {
+    	uint32_t ofs = 0;
+		for (int xx = 0; xx < width; xx++) {
+			self->i2c_buffer[ofs++] = mp_obj_get_int(palette[get_color(bpp)]);
+		}
+
+    	set_window(self, x, y+yy, x1, y+yy);
+   		DC_HIGH();
+	    CS_LOW();
+	    write_spi(self->spi_obj, (uint8_t *) self->i2c_buffer, buf_size);
+	    CS_HIGH();
+	}
+
+	if (self->buffer_size == 0) {
+		m_free(self->i2c_buffer);
+	}
 	return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pbitmap_obj, 5, 5, gc9a01_GC9A01_pbitmap);
+STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pbitmap_obj, 4, 5, gc9a01_GC9A01_pbitmap);
 
 
 STATIC mp_obj_t gc9a01_GC9A01_text(size_t n_args, const mp_obj_t *args) {
@@ -1502,7 +1477,6 @@ const mp_obj_type_t gc9a01_GC9A01_type = {
 };
 
 #endif
-
 
 
 mp_obj_t gc9a01_GC9A01_make_new(const mp_obj_type_t *type,

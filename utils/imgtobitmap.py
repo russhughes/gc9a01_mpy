@@ -58,7 +58,7 @@ def main():
         colors.append(f'{color:04x}')
 
     image_bitstring = ''
-    max_colors = len()
+    max_colors = len(colors)
 
     # Run through the image and create a string with the ascii binary
     # representation of the color of each pixel.

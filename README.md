@@ -31,11 +31,7 @@ ESP32-GENERIC-GC9A01-16M        | firmware.bin | Generic ESP32 devices
 ESP32-GENERIC-SPIRAM-GC9A01-4M  | firmware.bin | Generic ESP32 devices with SPI Ram
 ESP32-GENERIC-SPIRAM-GC9A01-16M | firmware.bin | Generic ESP32 devices with SPI Ram
 RP2                             | firmware.uf2 | Raspberry Pi Pico RP2040
-
-## Additional Modules
-
-Module             | Source
------------------- | -----------------------------------------------------------
+RP2W                            | firmware.uf2 | Raspberry Pi Pico W RP2040
 
 
 This is a work in progress.

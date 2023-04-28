@@ -1282,7 +1282,7 @@ static int out_fast (       // 1:Ok, 0:Aborted
     uint8_t *src, *dst;
     uint16_t y, bws, bwd;
 
-    // Copy the decompressed RGB rectanglar to the frame buffer (assuming RGB565)
+    // Copy the decompressed RGB rectangular to the frame buffer (assuming RGB565)
     src = (uint8_t*)bitmap;
     dst = dev->fbuf + 2 * (rect->top * dev->wfbuf + rect->left);    // Left-top of destination rectangular
     bws = 2 * (rect->right - rect->left + 1);                       // Width of source rectangular [byte]
@@ -1312,7 +1312,7 @@ static int out_slow (       // 1:Ok, 0:Aborted
 	uint16_t wx2 = (rect->right-rect->left+1) *2;
 	uint16_t h = rect->bottom-rect->top+1;
 
-    // Copy the decompressed RGB rectanglar to the frame buffer (assuming RGB565)
+    // Copy the decompressed RGB rectangular to the frame buffer (assuming RGB565)
     src = (uint8_t*)bitmap;
     dst = dev->fbuf;    							// Left-top of destination rectangular
 	for (y = rect->top; y <= rect->bottom; y++) {

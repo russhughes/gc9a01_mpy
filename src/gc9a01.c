@@ -33,7 +33,7 @@
 #include "py/runtime.h"
 #include "py/builtin.h"
 #include "py/mphal.h"
-#include "extmod/machine_spi.h"
+#include "extmod/modmachine.h"
 #include "gc9a01.h"
 
 #include "mpfile.h"

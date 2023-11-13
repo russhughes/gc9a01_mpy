@@ -47,13 +47,14 @@
 #include "tjpgd565.h"
 
 #define _swap_int16_t(a, b) { int16_t t = a; a = b; b = t; }
+
 #define _swap_bytes(val) ( (((val)>>8)&0x00FF)|(((val)<<8)&0xFF00) )
 
 #define ABS(N) (((N)<0)?(-(N)):(N))
 #define mp_hal_delay_ms(delay)  (mp_hal_delay_us(delay * 1000))
 
-#define CS_LOW()     { if(self->cs) {mp_hal_pin_write(self->cs, 0);} }
-#define CS_HIGH()    { if(self->cs) {mp_hal_pin_write(self->cs, 1);} }
+#define CS_LOW()     { if (self->cs) {mp_hal_pin_write(self->cs, 0);} }
+#define CS_HIGH()    { if (self->cs) {mp_hal_pin_write(self->cs, 1);} }
 #define DC_LOW()     (mp_hal_pin_write(self->dc, 0))
 #define DC_HIGH()    (mp_hal_pin_write(self->dc, 1))
 #define RESET_LOW()  { if (self->reset) mp_hal_pin_write(self->reset, 0); }
@@ -227,7 +228,7 @@ MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_soft_reset_obj, gc9a01_GC9A01_soft_reset
 
 STATIC mp_obj_t gc9a01_GC9A01_sleep_mode(mp_obj_t self_in, mp_obj_t value) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    if(mp_obj_is_true(value)) {
+    if (mp_obj_is_true(value)) {
         write_cmd(self, GC9A01_SLPIN, NULL, 0);
     } else {
         write_cmd(self, GC9A01_SLPOUT, NULL, 0);
@@ -250,7 +251,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_set_window_obj, 5, 5, g
 
 STATIC mp_obj_t gc9a01_GC9A01_inversion_mode(mp_obj_t self_in, mp_obj_t value) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
-    if(mp_obj_is_true(value)) {
+    if (mp_obj_is_true(value)) {
         write_cmd(self, GC9A01_INVON, NULL, 0);
     } else {
         write_cmd(self, GC9A01_INVOFF, NULL, 0);
@@ -1220,6 +1221,175 @@ STATIC void map_bitarray_to_rgb565(uint8_t const *bitarray, uint8_t *buffer, int
     }
 }
 
+
+
+
+
+// Horizontal line
+STATIC void lcd_hline(gc9a01_GC9A01_obj_t *self,uint16_t x1, uint16_t x2, uint16_t y,uint16_t color) {
+	if (x1>x2) _swap_int16_t(x1,x2);
+	fast_hline(self, x1, y, x2-x1+1, color);
+}
+
+// Fill a triangle - slope method
+// Original Author: Adafruit Industries
+
+// Fill a triangle - Bresenham method
+// Original from http://www.sunshine2k.de/coding/java/TriangleRasterization/TriangleRasterization.html
+
+STATIC void fill_triangle(gc9a01_GC9A01_obj_t *self,uint16_t x1,uint16_t y1,uint16_t x2,uint16_t y2,uint16_t x3,uint16_t y3, uint16_t c) {
+	uint16_t t1x,t2x,y,minx,maxx,t1xp,t2xp;
+	bool changed1 = false;
+	bool changed2 = false;
+	int16_t signx1,signx2,dx1,dy1,dx2,dy2;
+	uint16_t e1,e2;
+    // Sort vertices
+	if (y1>y2) { _swap_int16_t(y1,y2); _swap_int16_t(x1,x2); }
+	if (y1>y3) { _swap_int16_t(y1,y3); _swap_int16_t(x1,x3); }
+	if (y2>y3) { _swap_int16_t(y2,y3); _swap_int16_t(x2,x3); }
+
+	t1x=t2x=x1; y=y1;   // Starting points
+
+	dx1 = (int16_t)(x2 - x1); if (dx1<0) { dx1=-dx1; signx1=-1; } else signx1=1;
+	dy1 = (int16_t)(y2 - y1);
+ 
+	dx2 = (int16_t)(x3 - x1); if (dx2<0) { dx2=-dx2; signx2=-1; } else signx2=1;
+	dy2 = (int16_t)(y3 - y1);
+	
+	if (dy1 > dx1) {   // swap values
+        _swap_int16_t(dx1,dy1);
+		changed1 = true;
+	}
+	if (dy2 > dx2) {   // swap values
+        _swap_int16_t(dy2,dx2);
+		changed2 = true;
+	}
+	
+	e2 = (uint16_t)(dx2>>1);
+    // Flat top, just process the second half
+    if (y1==y2) goto next;
+    e1 = (uint16_t)(dx1>>1);
+	
+	for (uint16_t i = 0; i < dx1;) {
+		t1xp=0; t2xp=0;
+		if (t1x<t2x) { minx=t1x; maxx=t2x; }
+		else		{ minx=t2x; maxx=t1x; }
+        // process first line until y value is about to change
+		while(i<dx1) {
+			i++;			
+			e1 += dy1;
+	   	   	while (e1 >= dx1) {
+				e1 -= dx1;
+   	   	   	   if (changed1) t1xp=signx1;//t1x += signx1;
+				else          goto next1;
+			}
+			if (changed1) break;
+			else t1x += signx1;
+		}
+	// Move line
+	next1:
+        // process second line until y value is about to change
+		while (1) {
+			e2 += dy2;		
+			while (e2 >= dx2) {
+				e2 -= dx2;
+				if (changed2) t2xp=signx2;//t2x += signx2;
+				else          goto next2;
+			}
+			if (changed2)     break;
+			else              t2x += signx2;
+		}
+	next2:
+		if (minx>t1x) minx=t1x; 
+		if (minx>t2x) minx=t2x;
+		if (maxx<t1x) maxx=t1x; 
+		if (maxx<t2x) maxx=t2x;
+	   	lcd_hline(self,minx, maxx, y,c);    // Draw line from min to max points found on the y
+		// Now increase y
+		if (!changed1) t1x += signx1;
+		t1x+=t1xp;
+		if (!changed2) t2x += signx2;
+		t2x+=t2xp;
+    	y += 1;
+		if (y==y2) break;
+		
+   }
+	next:
+	// Second half
+	dx1 = (int16_t)(x3 - x2); if (dx1<0) { dx1=-dx1; signx1=-1; } else signx1=1;
+	dy1 = (int16_t)(y3 - y2);
+	t1x=x2;
+ 
+	if (dy1 > dx1) {   // swap values
+        _swap_int16_t(dy1,dx1);
+		changed1 = true;
+	} else changed1=false;
+	
+	e1 = (uint16_t)(dx1>>1);
+	
+	for (uint16_t i = 0; i<=dx1; i++) {
+		t1xp=0; t2xp=0;
+		if (t1x<t2x) { minx=t1x; maxx=t2x; }
+		else		{ minx=t2x; maxx=t1x; }
+	    // process first line until y value is about to change
+		while(i<dx1) {
+    		e1 += dy1;
+	   	   	while (e1 >= dx1) {
+				e1 -= dx1;
+   	   	   	   	if (changed1) { t1xp=signx1; break; }//t1x += signx1;
+				else          goto next3;
+			}
+			if (changed1) break;
+			else   	   	  t1x += signx1;
+			if (i<dx1) i++;
+		}
+	next3:
+        // process second line until y value is about to change
+		while (t2x!=x3) {
+			e2 += dy2;
+	   	   	while (e2 >= dx2) {
+				e2 -= dx2;
+				if (changed2) t2xp=signx2;
+				else          goto next4;
+			}
+			if (changed2)     break;
+			else              t2x += signx2;
+		}	   	   
+	next4:
+
+		if (minx>t1x) minx=t1x; 
+		if (minx>t2x) minx=t2x;
+		if (maxx<t1x) maxx=t1x; 
+		if (maxx<t2x) maxx=t2x;
+	   	lcd_hline(self,minx, maxx, y,c);    // Draw line from min to max points found on the y
+		// Now increase y
+		if (!changed1) t1x += signx1;
+		t1x+=t1xp;
+		if (!changed2) t2x += signx2;
+		t2x+=t2xp;
+    	y += 1;
+		if (y>y3) return;
+	}
+}
+
+STATIC mp_obj_t gc9a01_GC9A01_fill_triangle(size_t n_args, const mp_obj_t *args) {
+    gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
+    mp_int_t x0 = mp_obj_get_int(args[1]);
+    mp_int_t y0 = mp_obj_get_int(args[2]);
+    mp_int_t x1 = mp_obj_get_int(args[3]);
+    mp_int_t y1 = mp_obj_get_int(args[4]);
+    mp_int_t x2 = mp_obj_get_int(args[5]);
+    mp_int_t y2 = mp_obj_get_int(args[6]);
+    mp_int_t color = mp_obj_get_int(args[7]);
+
+    fill_triangle(self, x0, y0,x1,y1,x2,y2, color);
+
+    return mp_const_none;
+}
+STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_triangle_obj, 8, 8, gc9a01_GC9A01_fill_triangle);
+
+					
+
 // bitarray buffer width color bg_color
 
 STATIC mp_obj_t gc9a01_map_bitarray_to_rgb565(size_t n_args, const mp_obj_t *args) {
@@ -1456,6 +1626,7 @@ STATIC const mp_rom_map_elem_t gc9a01_GC9A01_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_vscsad), MP_ROM_PTR(&gc9a01_GC9A01_vscsad_obj) },
     { MP_ROM_QSTR(MP_QSTR_offset), MP_ROM_PTR(&gc9a01_GC9A01_offset_obj) },
 	{ MP_ROM_QSTR(MP_QSTR_jpg), MP_ROM_PTR(&gc9a01_GC9A01_jpg_obj)},
+    { MP_ROM_QSTR(MP_QSTR_fill_triangle), MP_ROM_PTR(&gc9a01_GC9A01_fill_triangle_obj) },
 
 };
 

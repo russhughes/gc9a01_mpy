@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GC9A01 Class Methods &mdash; gc9a01c 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example Programs" href="examples.html" />
+    <link rel="prev" title="Building the firmware" href="building.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gc9a01c
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">GC9A01C MicroPython driver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building the firmware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="building.html#clone-the-repositories">Clone the Repositories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#esp32-micropython-1-14-thru-1-19">ESP32 MicroPython 1.14 thru 1.19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#esp32-micropython-1-20-and-later">ESP32 MicroPython 1.20 and later</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#rp2040-micropython-1-20-and-later">RP2040 MicroPython 1.20 and later</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GC9A01 Class Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#GC9A01"><code class="docutils literal notranslate"><span class="pre">GC9A01</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reset"><code class="docutils literal notranslate"><span class="pre">reset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#soft_reset"><code class="docutils literal notranslate"><span class="pre">soft_reset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sleep_mode"><code class="docutils literal notranslate"><span class="pre">sleep_mode()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set_window"><code class="docutils literal notranslate"><span class="pre">set_window()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#circle"><code class="docutils literal notranslate"><span class="pre">circle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fill_circle"><code class="docutils literal notranslate"><span class="pre">fill_circle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fill_rect"><code class="docutils literal notranslate"><span class="pre">fill_rect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fill"><code class="docutils literal notranslate"><span class="pre">fill()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pixel"><code class="docutils literal notranslate"><span class="pre">pixel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#line"><code class="docutils literal notranslate"><span class="pre">line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#blit_buffer"><code class="docutils literal notranslate"><span class="pre">blit_buffer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#draw_len"><code class="docutils literal notranslate"><span class="pre">draw_len()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#write_len"><code class="docutils literal notranslate"><span class="pre">write_len()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#write"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bitmap"><code class="docutils literal notranslate"><span class="pre">bitmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pbitmap"><code class="docutils literal notranslate"><span class="pre">pbitmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#text"><code class="docutils literal notranslate"><span class="pre">text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rotate"><code class="docutils literal notranslate"><span class="pre">rotate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#width"><code class="docutils literal notranslate"><span class="pre">width()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#height"><code class="docutils literal notranslate"><span class="pre">height()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vscrdef"><code class="docutils literal notranslate"><span class="pre">vscrdef()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vscsad"><code class="docutils literal notranslate"><span class="pre">vscsad()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#on"><code class="docutils literal notranslate"><span class="pre">on()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#off"><code class="docutils literal notranslate"><span class="pre">off()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hline"><code class="docutils literal notranslate"><span class="pre">hline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vline"><code class="docutils literal notranslate"><span class="pre">vline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rect"><code class="docutils literal notranslate"><span class="pre">rect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#offset"><code class="docutils literal notranslate"><span class="pre">offset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#color565"><code class="docutils literal notranslate"><span class="pre">color565()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#map_bitarray_to_rgb565"><code class="docutils literal notranslate"><span class="pre">map_bitarray_to_rgb565()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jpg"><code class="docutils literal notranslate"><span class="pre">jpg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#polygon_center"><code class="docutils literal notranslate"><span class="pre">polygon_center()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#polygon"><code class="docutils literal notranslate"><span class="pre">polygon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fill_polygon"><code class="docutils literal notranslate"><span class="pre">fill_polygon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#draw_arc"><code class="docutils literal notranslate"><span class="pre">draw_arc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fill_arc"><code class="docutils literal notranslate"><span class="pre">fill_arc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bounding"><code class="docutils literal notranslate"><span class="pre">bounding()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Programs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#configuration-modules">Configuration modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configs/RP2-Dual-Display_config.html">RP2-Dual-Display</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2-Dual-Display_config.html#tft-configs-rp2-dual-display-tft-config0-py">tft_configs/RP2-Dual-Display/tft_config0.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2-Dual-Display_config.html#tft-configs-rp2-dual-display-tft-config1-py">tft_configs/RP2-Dual-Display/tft_config1.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2-Dual-Display_config.html#tft-configs-rp2-dual-display-tft-buttons-py">tft_configs/RP2-Dual-Display/tft_buttons.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="configs/RP2040-Touch-LCD-1.28_config.html">RP2040-Touch-LCD-1.28</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2040-Touch-LCD-1.28_config.html#tft-configs-rp2040-touch-lcd-1-28-tft-config-py">tft_configs/RP2040-Touch-LCD-1.28/tft_config.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2040-Touch-LCD-1.28_config.html#tft-configs-rp2040-touch-lcd-1-28-tft-buttons-py">tft_configs/RP2040-Touch-LCD-1.28/tft_buttons.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="configs/RP2_config.html">RP2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2_config.html#tft-configs-rp2-tft-config-py">tft_configs/RP2/tft_config.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2_config.html#tft-configs-rp2-tft-buttons-py">tft_configs/RP2/tft_buttons.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/alien.html">alien.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/arcs.html">arcs.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/bitarray.html">bitarray.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/bluemarble.html">bluemarble.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/chango.html">chango.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/feathers.html">feathers.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fonts.html">fonts.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/hello.html">hello.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/hello_world.html">hello_world.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/hershey.html">hershey.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/jpg_test.html">jpg_test.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/lines.html">lines.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/mono_fonts.html">mono_fonts.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/noto_fonts.html">noto_fonts.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/pinball.html">pinball.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/proverbs.html">proverbs.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/roids.html">roids.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/rotations.html">rotations.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/scroll.html">scroll.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/tiny_toasters.html">tiny_toasters.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/toasters.html">toasters.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/watch.html">watch.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fonts.html">Fonts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fonts.html#bitmap-fonts">Bitmap Fonts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fonts.html#bitmap-font-conversion">Bitmap Font Conversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fonts.html#bitmap-font-samples">Bitmap Font Samples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="fonts.html#x8-rom-fonts">8x8 Rom Fonts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fonts.html#x16-rom-fonts">8x16 Rom Fonts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fonts.html#id2">16x16 Rom Fonts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fonts.html#x32-rom-fonts">16x32 Rom Fonts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fonts.html#true-type-fonts">True Type fonts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="fonts.html#true-type-font-conversion">True-Type Font Conversion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils/create_png_examples.html">create_png_examples.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/create_png_examples.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/create_png_examples.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/image_converter.html">image_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/image_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/image_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/sprites_converter.html">sprites_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/sprites_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/sprites_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/text_font_converter.html">text_font_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/text_font_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/text_font_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/write_font_converter.html">write_font_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/write_font_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/write_font_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gc9a01c</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">GC9A01 Class Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gc9a01.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gc9a01-class-methods">
+<h1>GC9A01 Class Methods<a class="headerlink" href="#gc9a01-class-methods" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="GC9A01">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GC9A01</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`spi`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`width`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`height`</span>&#160; <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`reset`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`dc`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`cs`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`backlight`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`rotation`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`options`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`buffer_size`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GC9A01" title="Link to this definition"></a></dt>
+<dd><p>Create a GC9A01 display instance using the given SPI bus, display width, and display height.</p>
+<blockquote>
+<div><ul>
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">spi</span></code>: SPI bus to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code>: width of the display in pixels</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>: height of the display in pixels</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dc</span></code>: data/command pin to use</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Optional Parameters:</strong></p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">reset</span></code>: reset pin to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cs</span></code>: chip select pin to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">backlight</span></code>: backlight pin to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rotation</span></code>: rotation of the display (0-7)Rotation | Orientation</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: 0 degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: 90 degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2</span></code>: 180 degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">3</span></code>: 270 degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">4</span></code>: 0 degrees mirrored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">5</span></code>: 90 degrees mirrored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">6</span></code>: 180 degrees mirrored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">7</span></code>: 270 degrees mirrored</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">options</span></code>: display options</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WRAP</span></code>: pixels wrap at the edges</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WRAP_H</span></code>: pixels wrap at the horizontal edges</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WRAP_V</span></code>: pixels wrap at the vertical edges</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer_size</span></code>: size of the display buffer (default 0 buffer is dynamically allocated and freed as needed.)</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GC9A01</span></code> instance</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<p>If buffer_size is specified it must be large enough to contain the largest
+bitmap, font character and/or JPG used (Rows x Columns x 2 bytes).
+Specifying a buffer_size reserves memory for use by the driver otherwise
+memory required is allocated and freed dynamically as it is needed.  Dynamic
+allocation can cause heap fragmentation so garbage collection (GC) should
+be enabled.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#init" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Initialize the display.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Reset the display using the hardware reset pin.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="soft_reset">
+<span class="sig-name descname"><span class="pre">soft_reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#soft_reset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Reset the display using the software reset command.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sleep_mode">
+<span class="sig-name descname"><span class="pre">sleep_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sleep_mode" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Set the display sleep mode on or off (True/False).</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: True/False</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="set_window">
+<span class="sig-name descname"><span class="pre">set_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x0`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y0`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x1`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y1`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#set_window" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Set the frame memory write window.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y0</span></code>: y position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x1</span></code>: x position of the bottom right corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y1</span></code>: y position of the bottom right corner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="circle">
+<span class="sig-name descname"><span class="pre">circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`r`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#circle" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a circle outline.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the center</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the center</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r</span></code>: radius</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the circle</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Circle/Fill_Circle by <a class="reference external" href="https://github.com/c-logic">https://github.com/c-logic</a>
+<a class="reference external" href="https://github.com/russhughes/st7789_mpy/pull/46">https://github.com/russhughes/st7789_mpy/pull/46</a> <a class="reference external" href="https://github.com/c-logic/st7789_mpy.git">https://github.com/c-logic/st7789_mpy.git</a> patch-1</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fill_circle">
+<span class="sig-name descname"><span class="pre">fill_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`r`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fill_circle" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a filled circle.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the center</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the center</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r</span></code>: radius</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the circle</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Circle/Fill_Circle by <a class="reference external" href="https://github.com/c-logic">https://github.com/c-logic</a>
+<a class="reference external" href="https://github.com/russhughes/st7789_mpy/pull/46">https://github.com/russhughes/st7789_mpy/pull/46</a> <a class="reference external" href="https://github.com/c-logic/st7789_mpy.git">https://github.com/c-logic/st7789_mpy.git</a> patch-1</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="fill_rect">
+<span class="sig-name descname"><span class="pre">fill_rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`w`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`h`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fill_rect" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a filled rectangle.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: width</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">h</span></code>: height</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the rectangle</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="fill">
+<span class="sig-name descname"><span class="pre">fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fill" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="simple">
+<dt>Fill the entire display with a color.</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color to fill the display with</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pixel">
+<span class="sig-name descname"><span class="pre">pixel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pixel" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a pixel.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column position of the pixel</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row position of the pixel</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the pixel</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="line">
+<span class="sig-name descname"><span class="pre">line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x0`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y0`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x1`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y1`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#line" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a line.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x0</span></code>: x position of the start point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y0</span></code>: y position of the start point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x1</span></code>: x position of the end point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y1</span></code>: y position of the end point</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the line</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="blit_buffer">
+<span class="sig-name descname"><span class="pre">blit_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`buffer`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`w`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`h`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#blit_buffer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Copy a color565 bytes() or bytearray() to the display.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer</span></code>: bytes() or bytearray() containing the pixel data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: width of the buffer</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">h</span></code>: height of the buffer</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`font`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`string|int`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">{`color`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`scale`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a string or character.</p>
+<p>See the README.md in the <cite>vector/fonts</cite> directory for
+example fonts and the utils directory for a font conversion program.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">font</span></code>: font to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string|int</span></code>: string or character to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the top left corner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the text, defaults to <cite>WHITE</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code>: scale of the text, defaults to 1</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="draw_len">
+<span class="sig-name descname"><span class="pre">draw_len</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`font`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`string|int`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`scale`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw_len" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Return the length of <cite>string</cite>  when drawn with the given font and scale.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">font</span></code>: font to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string|int</span></code>: string or character to draw</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code>: scale of the text, defaults to 1</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: length of the string in pixels</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="write_len">
+<span class="sig-name descname"><span class="pre">write_len</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`font`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`string|int`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write_len" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Returns the width of the string or character in pixels if printed in the font.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">font</span></code>: font to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string|int</span></code>: string or character to draw</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: width of the string in pixels</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`font`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`string|int`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">{`fg_color`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`bg_color`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#write" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Write a string or character to the display. See the <cite>README.md</cite> in the <cite>truetype/fonts</cite>
+directory for example fonts. Returns the width of the string as printed in pixels.</p>
+<p>The <cite>font2bitmap</cite> utility creates compatible 1 bit per pixel bitmap modules
+from Proportional or Monospaced True Type fonts. The character size,
+foreground, background colors and the characters to include in the bitmap
+module may be specified as parameters. Use the -h option for details. If you
+specify a buffer_size during the display initialization it must be large
+enough to hold the widest character (HEIGHT * MAX_WIDTH * 2).</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">font</span></code>: font to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string|int</span></code>: string or character to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the top left corner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">fg_color</span></code>: foreground color of the text, defaults to <cite>WHITE</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bg_color</span></code>: background color of the text, defaults to <cite>BLACK</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code>: The width of the string or character in pixels.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="bitmap">
+<span class="sig-name descname"><span class="pre">bitmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`bitmap`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`idx`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bitmap" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a bitmap. Supports multiple bitmaps in one module that can be selected by index.
+The <cite>image_converter.py</cite> utility creates compatible 1 to 8 bit per pixel bitmap
+modules from image files using the Pillow Python Imaging Library.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitmap</span></code>: bitmap to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the top left corner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">idx</span></code>: index of the bitmap to draw (default: 0)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>The <cite>monofont2bitmap.py</cite> utility creates compatible 1 to 8 bit per pixel
+bitmap modules from <strong>Monospaced</strong> True Type fonts. See the <cite>inconsolata_16.py</cite>,
+<cite>inconsolata_32.py</cite> and <cite>inconsolata_64.py</cite> files in the <cite>examples/lib</cite> folder
+for sample modules and the <cite>mono_font.py</cite> program for an example using the
+generated modules.</p>
+<p>The character sizes, bit per pixel, foreground, background
+colors and the characters to include in the bitmap module may be specified as
+parameters. Use the -h option for details. Bits per pixel settings larger than
+one may be used to create antialiased characters at the expense of memory use.
+If you specify a buffer_size during the display initialization it must be
+large enough to hold the one character (HEIGHT * WIDTH * 2).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pbitmap">
+<span class="sig-name descname"><span class="pre">pbitmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`bitmap`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`idx`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pbitmap" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Progressively draw a bitmap one line at a time. Supports multiple bitmaps in one
+module that can be selected by index.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitmap</span></code>: bitmap to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the top left corner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">idx</span></code>: index of the bitmap to draw (default: 0)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="text">
+<span class="sig-name descname"><span class="pre">text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`font`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`string|int`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`fg_color`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`bg_color`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#text" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a string or character using a converted PC BIOS ROM font.
+See the <cite>README.md</cite> in the <cite>fonts/bitmap</cite> directory for example fonts and
+the <cite>font_from_romfont.py</cite> utility in utils to convert PC BIOS ROM fonts from the
+font-bin directory of [spacerace’s romfont repo.](<a class="reference external" href="https://github.com/spacerace/romfont">https://github.com/spacerace/romfont</a>)</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">font</span></code>: PC BIOS ROM font to use</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">string|int</span></code>: string or character to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x position of the top left corner</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y position of the top left corner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">fg_color</span></code>: foreground color of the text, defaults to <cite>WHITE</cite></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bg_color</span></code>: background color of the text, defaults to <cite>BLACK</cite></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="rotate">
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`rotation`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rotate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Rotate the display to the given orientation.</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Required Parameters:</strong></p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">rotation</span></code>: rotation of the display</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: portrait</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: landscape</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">2</span></code>: inverted portrait</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">3</span></code>: inverted landscape</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">4</span></code>: portrait mirrored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">5</span></code>: landscape mirrored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">6</span></code>: inverted portrait mirrored</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">7</span></code>: inverted landscape mirrored</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="width">
+<span class="sig-name descname"><span class="pre">width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#width" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Return the logical width of the display in the current orientation.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">(int)</span></code>: width of the display</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="height">
+<span class="sig-name descname"><span class="pre">height</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#height" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Return the logical height of the display in the current orientation.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">(int)</span></code>: height of the display</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="vscrdef">
+<span class="sig-name descname"><span class="pre">vscrdef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`tfa`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`vsa`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`bfa`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vscrdef" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Set the hardware vertical scrolling definition.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">tfa</span></code>: top fixed area</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vsa</span></code>: vertical scrolling area</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bfa</span></code>: bottom fixed area</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="vscsad">
+<span class="sig-name descname"><span class="pre">vscsad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`vssa`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vscsad" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Set the hardware vertical scrolling start address.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">vssa</span></code>: vertical scrolling start address</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="on">
+<span class="sig-name descname"><span class="pre">on</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#on" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Turn on the backlight pin if one was defined during init.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="off">
+<span class="sig-name descname"><span class="pre">off</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#off" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Turn off the backlight pin if one was defined during init.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="hline">
+<span class="sig-name descname"><span class="pre">hline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`w`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hline" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a single horizontal line. This is a fast version with reduced number of SPI calls.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: width of the line</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the line</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="vline">
+<span class="sig-name descname"><span class="pre">vline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`h`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vline" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a vertical line. This is a fast version with reduced number of SPI calls.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">h</span></code>: height of the line</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the line</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`w`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`h`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#rect" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw the outline of a rectangle.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: width of the rectangle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">h</span></code>: height of the rectangle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the rectangle</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#offset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Set the xstart and ystart offset of the display.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: x offset</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: y offset</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="color565">
+<span class="sig-name descname"><span class="pre">color565</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`r`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`g`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`b`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#color565" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Convert red, green, and blue values into a 16-bit RGB565 value.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">r</span></code>: red value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">g</span></code>: green value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: blue value</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>return value</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">(int)</span></code>:  16-bit RGB565 value</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="map_bitarray_to_rgb565">
+<span class="sig-name descname"><span class="pre">map_bitarray_to_rgb565</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`bitarray`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`buffer`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`width`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`bg_color`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#map_bitarray_to_rgb565" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Convert the given bitarray into a RGB565 bitmap.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bitarray</span></code>: bitarray to convert</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer</span></code>: buffer to write the bitmap to</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code>: width of the bitmap</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the bitarray (default: white)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bg_color</span></code>: background color of the bitarray (default: black)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="jpg">
+<span class="sig-name descname"><span class="pre">jpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`filename`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`mode`}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jpg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a JPG image.
+The memory required to decode and display a JPG can be considerable as a
+full screen 320x240 JPG would require at least 3100 bytes for the working
+area + 320x240x2 bytes of ram to buffer the image. Jpg images that would
+require a buffer larger than available memory can be drawn by passing <cite>SLOW</cite>
+for method. The <cite>SLOW</cite> method will draw the image a piece at a time using
+the Minimum Coded Unit (MCU, typically 8x8) of the image.</p>
+<blockquote>
+<div><ul>
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">filename</span></code>: filename of the JPG image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Optional Parameters:</strong></p>
+<blockquote>
+<div><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: mode to use for drawing the image (default: JPG_MODE_FAST)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JPG_MODE_FAST</span></code>: draw the entire image at once</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">JPG_MODE_SLOW</span></code>: draw the image progressively by each Minimum Coded Unit</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="polygon_center">
+<span class="sig-name descname"><span class="pre">polygon_center</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`polygon`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polygon_center" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Return the center of a polygon as an (x, y) tuple.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">polygon</span></code>: polygon to get the center of</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code>: tuple of the center of the polygon</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="polygon">
+<span class="sig-name descname"><span class="pre">polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`polygon`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`angle`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`cx`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`cy`}}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polygon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a polygon.
+The polygon should consist of a list of (x, y) tuples forming a closed polygon.
+See <cite>roids.py</cite> for an example.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">polygon</span></code>: polygon to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the polygon</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">angle</span></code>: angle in radians to rotate the polygon (default: 0.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cx</span></code>: x coordinate of the center of rotation (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cy</span></code>: y coordinate of the center of rotation (default: 0)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="fill_polygon">
+<span class="sig-name descname"><span class="pre">fill_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`polygon`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`angle`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`cx`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`cy`}}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fill_polygon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a filled polygon.
+The polygon should consist of a list of (x, y) tuples forming a closed polygon.
+See <cite>watch.py</cite> for an example.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">polygon</span></code>: polygon to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the polygon</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">angle</span></code>: angle in radians to rotate the polygon (default: 0.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cx</span></code>: x coordinate of the center of rotation (default: 0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cy</span></code>: y coordinate of the center of rotation (default: 0)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="draw_arc">
+<span class="sig-name descname"><span class="pre">draw_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`start_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`end_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`segments`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`rx`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`ry`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`w`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw_arc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw an arc.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_angle</span></code>: start angle of the arc in degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">end_angle</span></code>: end angle of the arc in degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">segments</span></code>: number of segments to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rx</span></code>: x radius of the arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ry</span></code>: y radius of the arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: width of the arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the arc</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="fill_arc">
+<span class="sig-name descname"><span class="pre">fill_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`start_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`end_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`segments`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`rx`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`ry`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fill_arc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Draw a filled arc.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Required Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: column to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: row to start at</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_angle</span></code>: start angle of the arc in degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">end_angle</span></code>: end angle of the arc in degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">segments</span></code>: number of segments to draw</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rx</span></code>: x radius of the arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ry</span></code>: y radius of the arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the arc</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="bounding">
+<span class="sig-name descname"><span class="pre">bounding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">{`status`</span> <span class="pre">{</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`as_rect`}}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bounding" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p>Enables or disables tracking the display area that has been written to. Initially, tracking is disabled.</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt><strong>Optional Parameters:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">status</span></code>: Pass a True value to enable tracking and False to disable it. Passing a True or False parameter will reset the current bounding rectangle to (display_width, display_height, 0, 0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as_rect</span></code>: If True, the returned tuple will contain (min_x, min_y, width, height) values.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Returns:</strong></dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y,</span> <span class="pre">w,</span> <span class="pre">h)</span></code>:  tuple of the bounding box or (min_x, min_y, width, height) if as_rect parameter is True</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="building.html" class="btn btn-neutral float-left" title="Building the firmware" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Example Programs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

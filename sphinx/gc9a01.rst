@@ -1,0 +1,543 @@
+====================
+GC9A01 Class Methods
+====================
+
+
+
+
+.. class:: GC9A01(`spi`, `width`, `height`  {, `reset`, `dc`, `cs`, `backlight`, `rotation`, `options`, `buffer_size`})
+
+
+  Create a GC9A01 display instance using the given SPI bus, display width, and display height.
+
+    * **Required Parameters:**
+        * ``spi``: SPI bus to use
+        * ``width``: width of the display in pixels
+        * ``height``: height of the display in pixels
+        * ``dc``: data/command pin to use
+
+    * **Optional Parameters:**
+
+        * ``reset``: reset pin to use
+        * ``cs``: chip select pin to use
+        * ``backlight``: backlight pin to use
+        * ``rotation``: rotation of the display (0-7)Rotation | Orientation
+
+            * ``0``: 0 degrees
+            * ``1``: 90 degrees
+            * ``2``: 180 degrees
+            * ``3``: 270 degrees
+            * ``4``: 0 degrees mirrored
+            * ``5``: 90 degrees mirrored
+            * ``6``: 180 degrees mirrored
+            * ``7``: 270 degrees mirrored
+
+        * ``options``: display options
+
+            * ``WRAP``: pixels wrap at the edges
+            * ``WRAP_H``: pixels wrap at the horizontal edges
+            * ``WRAP_V``: pixels wrap at the vertical edges
+
+        * ``buffer_size``: size of the display buffer (default 0 buffer is dynamically allocated and freed as needed.)
+
+    * **Returns:**
+        * ``GC9A01`` instance
+
+If buffer_size is specified it must be large enough to contain the largest
+bitmap, font character and/or JPG used (Rows x Columns x 2 bytes).
+Specifying a buffer_size reserves memory for use by the driver otherwise
+memory required is allocated and freed dynamically as it is needed.  Dynamic
+allocation can cause heap fragmentation so garbage collection (GC) should
+be enabled.
+
+
+.. method:: init()
+
+Initialize the display.
+
+
+.. method:: reset()
+
+Reset the display using the hardware reset pin.
+
+
+.. method:: soft_reset()
+
+Reset the display using the software reset command.
+
+
+.. method:: sleep_mode(value)
+
+Set the display sleep mode on or off (True/False).
+
+    * **Required Parameters:**
+        * ``value``: True/False
+
+
+.. method:: set_window(`x0`, `y0`, `x1`, `y1`)
+
+Set the frame memory write window.
+
+    * **Required Parameters:**
+        * ``x0``: x position of the top left corner
+        * ``y0``: y position of the top left corner
+        * ``x1``: x position of the bottom right corner
+        * ``y1``: y position of the bottom right corner
+
+
+.. method:: circle(`x`, `y`, `r`, `color`)
+
+Draw a circle outline.
+
+    * **Required Parameters:**
+        * ``x``: x position of the center
+        * ``y``: y position of the center
+        * ``r``: radius
+        * ``color``: color of the circle
+
+Circle/Fill_Circle by https://github.com/c-logic
+https://github.com/russhughes/st7789_mpy/pull/46 https://github.com/c-logic/st7789_mpy.git patch-1
+
+
+.. method:: fill_circle(`x`, `y`, `r`, `color`)
+
+Draw a filled circle.
+
+    * **Required Parameters:**
+        * ``x``: x position of the center
+        * ``y``: y position of the center
+        * ``r``: radius
+        * ``color``: color of the circle
+
+Circle/Fill_Circle by https://github.com/c-logic
+https://github.com/russhughes/st7789_mpy/pull/46 https://github.com/c-logic/st7789_mpy.git patch-1
+
+
+.. method:: fill_rect(`x`, `y`, `w`, `h`, `color`)
+
+Draw a filled rectangle.
+
+    * **Required Parameters:**
+        * ``x``: x position of the top left corner
+        * ``y``: y position of the top left corner
+        * ``w``: width
+        * ``h``: height
+        * ``color``: color of the rectangle
+
+
+.. method:: fill(`color`)
+
+Fill the entire display with a color.
+    * **Required Parameters:**
+        * ``color``: color to fill the display with
+
+
+.. method:: pixel(`x`, `y`, `color`)
+
+Draw a pixel.
+
+    * **Required Parameters:**
+        * ``x``: column position of the pixel
+        * ``y``: row position of the pixel
+        * ``color``: color of the pixel
+
+
+.. method:: line(`x0`, `y0`, `x1`, `y1`, `color`)
+
+Draw a line.
+
+    * **Required Parameters:**
+        * ``x0``: x position of the start point
+        * ``y0``: y position of the start point
+        * ``x1``: x position of the end point
+        * ``y1``: y position of the end point
+        * ``color``: color of the line
+
+
+.. method:: blit_buffer(`buffer`, `x`, `y`, `w`, `h`)
+
+Copy a color565 bytes() or bytearray() to the display.
+
+    * **Required Parameters:**
+        * ``buffer``: bytes() or bytearray() containing the pixel data
+        * ``x``: x position of the top left corner
+        * ``y``: y position of the top left corner
+        * ``w``: width of the buffer
+        * ``h``: height of the buffer
+
+
+.. method:: draw(`font`, `string|int`, `x`, `y`, {`color` , `scale`})
+
+Draw a string or character.
+
+See the README.md in the `vector/fonts` directory for
+example fonts and the utils directory for a font conversion program.
+
+    * **Required Parameters:**
+        * ``font``: font to use
+        * ``string|int``: string or character to draw
+        * ``x``: x position of the top left corner
+        * ``y``: y position of the top left corner
+
+    * **Optional Parameters:**
+        * ``color``: color of the text, defaults to `WHITE`
+        * ``scale``: scale of the text, defaults to 1
+
+
+.. method:: draw_len(`font`, `string|int` {, `scale`})
+
+Return the length of `string`  when drawn with the given font and scale.
+
+    * **Required Parameters:**
+        * ``font``: font to use
+        * ``string|int``: string or character to draw
+
+    * **Optional Parameters:**
+        * ``scale``: scale of the text, defaults to 1
+
+    * **Returns:**
+        * ``int``: length of the string in pixels
+
+
+.. method:: write_len(`font`, `string|int`)
+
+Returns the width of the string or character in pixels if printed in the font.
+
+    * **Required Parameters:**
+        * ``font``: font to use
+        * ``string|int``: string or character to draw
+
+    * **Returns:**
+        * ``int``: width of the string in pixels
+
+
+.. method:: write(`font`, `string|int`, `x`, `y`, {`fg_color`, `bg_color`})
+
+Write a string or character to the display. See the `README.md` in the `truetype/fonts`
+directory for example fonts. Returns the width of the string as printed in pixels.
+
+The `font2bitmap` utility creates compatible 1 bit per pixel bitmap modules
+from Proportional or Monospaced True Type fonts. The character size,
+foreground, background colors and the characters to include in the bitmap
+module may be specified as parameters. Use the -h option for details. If you
+specify a buffer_size during the display initialization it must be large
+enough to hold the widest character (HEIGHT * MAX_WIDTH * 2).
+
+    * **Required Parameters:**
+        * ``font``: font to use
+        * ``string|int``: string or character to draw
+        * ``x``: x position of the top left corner
+        * ``y``: y position of the top left corner
+
+    * **Optional Parameters:**
+        * ``fg_color``: foreground color of the text, defaults to `WHITE`
+        * ``bg_color``: background color of the text, defaults to `BLACK`
+
+    * **Returns:**
+        * ``int``: The width of the string or character in pixels.
+
+
+.. method:: bitmap(`bitmap`, `x`, `y` {, `idx`})
+
+Draw a bitmap. Supports multiple bitmaps in one module that can be selected by index.
+The `image_converter.py` utility creates compatible 1 to 8 bit per pixel bitmap
+modules from image files using the Pillow Python Imaging Library.
+
+
+    * **Required Parameters:**
+        * ``bitmap``: bitmap to draw
+        * ``x``: x position of the top left corner
+        * ``y``: y position of the top left corner
+
+    * **Optional Parameters:**
+        * ``idx``: index of the bitmap to draw (default: 0)
+
+The `monofont2bitmap.py` utility creates compatible 1 to 8 bit per pixel
+bitmap modules from **Monospaced** True Type fonts. See the `inconsolata_16.py`,
+`inconsolata_32.py` and `inconsolata_64.py` files in the `examples/lib` folder
+for sample modules and the `mono_font.py` program for an example using the
+generated modules.
+
+The character sizes, bit per pixel, foreground, background
+colors and the characters to include in the bitmap module may be specified as
+parameters. Use the -h option for details. Bits per pixel settings larger than
+one may be used to create antialiased characters at the expense of memory use.
+If you specify a buffer_size during the display initialization it must be
+large enough to hold the one character (HEIGHT * WIDTH * 2).
+
+
+.. method:: pbitmap(`bitmap`, `x`, `y` {, `idx`})
+
+Progressively draw a bitmap one line at a time. Supports multiple bitmaps in one
+module that can be selected by index.
+
+    * **Required Parameters:**
+        * ``bitmap``: bitmap to draw
+        * ``x``: x position of the top left corner
+        * ``y``: y position of the top left corner
+
+    * **Optional Parameters:**
+        * ``idx``: index of the bitmap to draw (default: 0)
+
+
+.. method:: text(`font`, `string|int`, `x`, `y` {, `fg_color`, `bg_color`})
+
+Draw a string or character using a converted PC BIOS ROM font.
+See the `README.md` in the `fonts/bitmap` directory for example fonts and
+the `font_from_romfont.py` utility in utils to convert PC BIOS ROM fonts from the
+font-bin directory of [spacerace's romfont repo.](https://github.com/spacerace/romfont)
+
+    * **Required Parameters:**
+        * ``font``: PC BIOS ROM font to use
+        * ``string|int``: string or character to draw
+        * ``x``: x position of the top left corner
+        * ``y``: y position of the top left corner
+
+    * **Optional Parameters:**
+        * ``fg_color``: foreground color of the text, defaults to `WHITE`
+        * ``bg_color``: background color of the text, defaults to `BLACK`
+
+
+.. method:: rotate(`rotation`)
+
+Rotate the display to the given orientation.
+
+    * **Required Parameters:**
+
+        * ``rotation``: rotation of the display
+
+            * ``0``: portrait
+            * ``1``: landscape
+            * ``2``: inverted portrait
+            * ``3``: inverted landscape
+            * ``4``: portrait mirrored
+            * ``5``: landscape mirrored
+            * ``6``: inverted portrait mirrored
+            * ``7``: inverted landscape mirrored
+
+
+.. method:: width()
+
+Return the logical width of the display in the current orientation.
+
+    * **Returns:**
+        * ``(int)``: width of the display
+
+
+.. method:: height()
+
+Return the logical height of the display in the current orientation.
+
+    * **Returns:**
+        * ``(int)``: height of the display
+
+
+.. method:: vscrdef(`tfa`, `vsa`, `bfa`)
+
+Set the hardware vertical scrolling definition.
+
+    * **Required Parameters:**
+        * ``tfa``: top fixed area
+        * ``vsa``: vertical scrolling area
+        * ``bfa``: bottom fixed area
+
+
+.. method:: vscsad(`vssa`)
+
+Set the hardware vertical scrolling start address.
+
+    * **Required Parameters:**
+        * ``vssa``: vertical scrolling start address
+
+
+.. method:: on()
+
+Turn on the backlight pin if one was defined during init.
+
+
+.. method:: off()
+
+Turn off the backlight pin if one was defined during init.
+
+
+.. method:: hline(`x`, `y`, `w`, `color`)
+
+Draw a single horizontal line. This is a fast version with reduced number of SPI calls.
+
+    * **Required Parameters:**
+        * ``x``: column to start at
+        * ``y``: row to start at
+        * ``w``: width of the line
+        * ``color``: color of the line
+
+
+.. method:: vline(`x`, `y`, `h`, `color`)
+
+Draw a vertical line. This is a fast version with reduced number of SPI calls.
+
+    * **Required Parameters:**
+        * ``x``: column to start at
+        * ``y``: row to start at
+        * ``h``: height of the line
+        * ``color``: color of the line
+
+
+.. method:: rect(`x`, `y`, `w`, `h`, `color`)
+
+Draw the outline of a rectangle.
+
+    * **Required Parameters:**
+        * ``x``: column to start at
+        * ``y``: row to start at
+        * ``w``: width of the rectangle
+        * ``h``: height of the rectangle
+        * ``color``: color of the rectangle
+
+
+.. method:: offset(`x`, `y`)
+
+Set the xstart and ystart offset of the display.
+
+    * **Required Parameters:**
+        * ``x``: x offset
+        * ``y``: y offset
+
+
+.. method:: color565(`r`, `g`, `b`)
+
+Convert red, green, and blue values into a 16-bit RGB565 value.
+
+    * **Required Parameters:**
+        * ``r``: red value
+        * ``g``: green value
+        * ``b``: blue value
+
+    * **return value**:
+        * ``(int)``:  16-bit RGB565 value
+
+
+.. method:: map_bitarray_to_rgb565(`bitarray`, `buffer`, `width` {, `color`, `bg_color`})
+
+Convert the given bitarray into a RGB565 bitmap.
+
+    * **Required Parameters:**
+        * ``bitarray``: bitarray to convert
+        * ``buffer``: buffer to write the bitmap to
+        * ``width``: width of the bitmap
+
+    * **Optional Parameters:**
+        * ``color``: color of the bitarray (default: white)
+        * ``bg_color``: background color of the bitarray (default: black)
+
+
+.. method:: jpg(`filename`, `x`, `y` {, `mode`})
+
+Draw a JPG image.
+The memory required to decode and display a JPG can be considerable as a
+full screen 320x240 JPG would require at least 3100 bytes for the working
+area + 320x240x2 bytes of ram to buffer the image. Jpg images that would
+require a buffer larger than available memory can be drawn by passing `SLOW`
+for method. The `SLOW` method will draw the image a piece at a time using
+the Minimum Coded Unit (MCU, typically 8x8) of the image.
+
+    * **Required Parameters:**
+        * ``filename``: filename of the JPG image
+        * ``x``: column to start at
+        * ``y``: row to start at
+
+    * **Optional Parameters:**
+
+        * ``mode``: mode to use for drawing the image (default: JPG_MODE_FAST)
+
+            * ``JPG_MODE_FAST``: draw the entire image at once
+            * ``JPG_MODE_SLOW``: draw the image progressively by each Minimum Coded Unit
+
+
+.. method:: polygon_center(`polygon`)
+
+Return the center of a polygon as an (x, y) tuple.
+
+    * **Required Parameters:**
+        * ``polygon``: polygon to get the center of
+
+    * **Returns:**
+        * ``(x, y)``: tuple of the center of the polygon
+
+
+.. method:: polygon(`polygon`, `x`, `y`, `color` {, `angle` {, `cx`, `cy`}})
+
+Draw a polygon.
+The polygon should consist of a list of (x, y) tuples forming a closed polygon.
+See `roids.py` for an example.
+
+    * **Required Parameters:**
+        * ``polygon``: polygon to draw
+        * ``x``: column to start at
+        * ``y``: row to start at
+        * ``color``: color of the polygon
+
+    * **Optional Parameters:**
+        * ``angle``: angle in radians to rotate the polygon (default: 0.0)
+        * ``cx``: x coordinate of the center of rotation (default: 0)
+        * ``cy``: y coordinate of the center of rotation (default: 0)
+
+
+.. method:: fill_polygon(`polygon`, `x`, `y`, `color` {, `angle` {, `cx`, `cy`}})
+
+Draw a filled polygon.
+The polygon should consist of a list of (x, y) tuples forming a closed polygon.
+See `watch.py` for an example.
+
+    * **Required Parameters:**
+        * ``polygon``: polygon to draw
+        * ``x``: column to start at
+        * ``y``: row to start at
+        * ``color``: color of the polygon
+
+    * **Optional Parameters:**
+        * ``angle``: angle in radians to rotate the polygon (default: 0.0)
+        * ``cx``: x coordinate of the center of rotation (default: 0)
+        * ``cy``: y coordinate of the center of rotation (default: 0)
+
+
+.. method:: draw_arc(`x`, `y`, `start_angle`, `end_angle`, `segments`, `rx`, `ry`, `w`, `color`)
+
+Draw an arc.
+
+    * **Required Parameters:**
+        * ``x``: column to start at
+        * ``y``: row to start at
+        * ``start_angle``: start angle of the arc in degrees
+        * ``end_angle``: end angle of the arc in degrees
+        * ``segments``: number of segments to draw
+        * ``rx``: x radius of the arc
+        * ``ry``: y radius of the arc
+        * ``w``: width of the arc
+        * ``color``: color of the arc
+
+
+.. method:: fill_arc(`x`, `y`, `start_angle`, `end_angle`, `segments`, `rx`, `ry`, `color`)
+
+Draw a filled arc.
+
+    * **Required Parameters:**
+        * ``x``: column to start at
+        * ``y``: row to start at
+        * ``start_angle``: start angle of the arc in degrees
+        * ``end_angle``: end angle of the arc in degrees
+        * ``segments``: number of segments to draw
+        * ``rx``: x radius of the arc
+        * ``ry``: y radius of the arc
+        * ``color``: color of the arc
+
+
+.. method:: bounding({`status` {, `as_rect`}})
+
+Enables or disables tracking the display area that has been written to. Initially, tracking is disabled.
+
+    * **Optional Parameters:**
+        * ``status``: Pass a True value to enable tracking and False to disable it. Passing a True or False parameter will reset the current bounding rectangle to (display_width, display_height, 0, 0).
+        * ``as_rect``: If True, the returned tuple will contain (min_x, min_y, width, height) values.
+
+    * **Returns:**
+        * ``(x, y, w, h)``:  tuple of the bounding box or (min_x, min_y, width, height) if as_rect parameter is True

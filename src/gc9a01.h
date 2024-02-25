@@ -1,5 +1,5 @@
 #ifndef __GC9A01_H__
-#define __GC9A01_H__
+#define  __GC9A01_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,11 +40,11 @@ extern "C" {
 #define GC9A01_MADCTL  0x36
 #define GC9A01_VSCSAD  0x37
 
-#define GC9A01_MADCTL_MY  0x80  // Page Address Order
-#define GC9A01_MADCTL_MX  0x40  // Column Address Order
-#define GC9A01_MADCTL_MV  0x20  // Page/Column Order
-#define GC9A01_MADCTL_ML  0x10  // Line Address Order
-#define GC9A01_MADCTL_MH  0x04  // Display Data Latch Order
+#define GC9A01_MADCTL_MY  0x80                      // Page Address Order
+#define GC9A01_MADCTL_MX  0x40                      // Column Address Order
+#define GC9A01_MADCTL_MV  0x20                      // Page/Column Order
+#define GC9A01_MADCTL_ML  0x10                      // Line Address Order
+#define GC9A01_MADCTL_MH  0x04                      // Display Data Latch Order
 #define GC9A01_MADCTL_RGB 0x00
 #define GC9A01_MADCTL_BGR 0x08
 
@@ -54,14 +54,18 @@ extern "C" {
 #define GC9A01_RDID4   0xDD
 
 // Color definitions
-#define	BLACK   0x0000
-#define	BLUE    0x001F
-#define	RED     0xF800
-#define	GREEN   0x07E0
+#define BLACK   0x0000
+#define BLUE    0x001F
+#define RED     0xF800
+#define GREEN   0x07E0
 #define CYAN    0x07FF
 #define MAGENTA 0xF81F
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
+
+#define OPTIONS_WRAP_V 0x01
+#define OPTIONS_WRAP_H 0x02
+#define OPTIONS_WRAP   0x03
 
 #ifdef  __cplusplus
 }

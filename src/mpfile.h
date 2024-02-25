@@ -24,8 +24,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef __MICROPY_INCLUDED_PY_MPFILE_H__
-#define __MICROPY_INCLUDED_PY_MPFILE_H__
+#ifndef __MPFILE_H__
+#define  __MPFILE_H__
 
 #include "py/obj.h"
 #include <sys/types.h>  // for off_t

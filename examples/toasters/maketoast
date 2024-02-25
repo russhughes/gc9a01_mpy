@@ -1,0 +1,34 @@
+#!/bin/sh
+
+#
+# grab sprites from spritesheet using ImageMagick and convert to bitmap format.
+#
+# spritesheet from CircuitPython_Flying_Toasters
+#   https://learn.adafruit.com/circuitpython-sprite-animation-pendant-mario-clouds-flying-toasters
+#
+
+convert toasters.bmp -crop 64x64+64+0 t1.png
+convert toasters.bmp -crop 64x64+128+0 t2.png
+convert toasters.bmp -crop 64x64+192+0 t3.png
+convert toasters.bmp -crop 64x64+256+0 t4.png
+convert toasters.bmp -crop 64x64+320+0 t5.png
+
+# use 3 bits per pixel / 8 colors
+
+../../utils/image_converter.py t1.png 3 -s >t1.py
+../../utils/image_converter.py t2.png 3 -s >t2.py
+../../utils/image_converter.py t3.png 3 -s >t3.py
+../../utils/image_converter.py t4.png 3 -s >t4.py
+../../utils/image_converter.py t5.png 3 -s >t5.py
+
+mpy-cross t1.py
+mpy-cross t2.py
+mpy-cross t3.py
+mpy-cross t4.py
+mpy-cross t5.py
+
+mpremote cp t1.mpy :
+mpremote cp t2.mpy :
+mpremote cp t3.mpy :
+mpremote cp t4.mpy :
+mpremote cp t5.mpy :

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fonts &mdash; gc9a01c 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utilities" href="utils.html" />
+    <link rel="prev" title="watch.py" href="examples/watch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gc9a01c
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">GC9A01C MicroPython driver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="building.html">Building the firmware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="building.html#clone-the-repositories">Clone the Repositories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#esp32-micropython-1-14-thru-1-19">ESP32 MicroPython 1.14 thru 1.19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#esp32-micropython-1-20-and-later">ESP32 MicroPython 1.20 and later</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building.html#rp2040-micropython-1-20-and-later">RP2040 MicroPython 1.20 and later</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gc9a01.html">GC9A01 Class Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#GC9A01"><code class="docutils literal notranslate"><span class="pre">GC9A01</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#reset"><code class="docutils literal notranslate"><span class="pre">reset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#soft_reset"><code class="docutils literal notranslate"><span class="pre">soft_reset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#sleep_mode"><code class="docutils literal notranslate"><span class="pre">sleep_mode()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#set_window"><code class="docutils literal notranslate"><span class="pre">set_window()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#circle"><code class="docutils literal notranslate"><span class="pre">circle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#fill_circle"><code class="docutils literal notranslate"><span class="pre">fill_circle()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#fill_rect"><code class="docutils literal notranslate"><span class="pre">fill_rect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#fill"><code class="docutils literal notranslate"><span class="pre">fill()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#pixel"><code class="docutils literal notranslate"><span class="pre">pixel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#line"><code class="docutils literal notranslate"><span class="pre">line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#blit_buffer"><code class="docutils literal notranslate"><span class="pre">blit_buffer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#draw"><code class="docutils literal notranslate"><span class="pre">draw()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#draw_len"><code class="docutils literal notranslate"><span class="pre">draw_len()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#write_len"><code class="docutils literal notranslate"><span class="pre">write_len()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#write"><code class="docutils literal notranslate"><span class="pre">write()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#bitmap"><code class="docutils literal notranslate"><span class="pre">bitmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#pbitmap"><code class="docutils literal notranslate"><span class="pre">pbitmap()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#text"><code class="docutils literal notranslate"><span class="pre">text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#rotate"><code class="docutils literal notranslate"><span class="pre">rotate()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#width"><code class="docutils literal notranslate"><span class="pre">width()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#height"><code class="docutils literal notranslate"><span class="pre">height()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#vscrdef"><code class="docutils literal notranslate"><span class="pre">vscrdef()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#vscsad"><code class="docutils literal notranslate"><span class="pre">vscsad()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#on"><code class="docutils literal notranslate"><span class="pre">on()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#off"><code class="docutils literal notranslate"><span class="pre">off()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#hline"><code class="docutils literal notranslate"><span class="pre">hline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#vline"><code class="docutils literal notranslate"><span class="pre">vline()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#rect"><code class="docutils literal notranslate"><span class="pre">rect()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#offset"><code class="docutils literal notranslate"><span class="pre">offset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#color565"><code class="docutils literal notranslate"><span class="pre">color565()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#map_bitarray_to_rgb565"><code class="docutils literal notranslate"><span class="pre">map_bitarray_to_rgb565()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#jpg"><code class="docutils literal notranslate"><span class="pre">jpg()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#polygon_center"><code class="docutils literal notranslate"><span class="pre">polygon_center()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#polygon"><code class="docutils literal notranslate"><span class="pre">polygon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#fill_polygon"><code class="docutils literal notranslate"><span class="pre">fill_polygon()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#draw_arc"><code class="docutils literal notranslate"><span class="pre">draw_arc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#fill_arc"><code class="docutils literal notranslate"><span class="pre">fill_arc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="gc9a01.html#bounding"><code class="docutils literal notranslate"><span class="pre">bounding()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Programs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#configuration-modules">Configuration modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configs/RP2-Dual-Display_config.html">RP2-Dual-Display</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2-Dual-Display_config.html#tft-configs-rp2-dual-display-tft-config0-py">tft_configs/RP2-Dual-Display/tft_config0.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2-Dual-Display_config.html#tft-configs-rp2-dual-display-tft-config1-py">tft_configs/RP2-Dual-Display/tft_config1.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2-Dual-Display_config.html#tft-configs-rp2-dual-display-tft-buttons-py">tft_configs/RP2-Dual-Display/tft_buttons.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="configs/RP2040-Touch-LCD-1.28_config.html">RP2040-Touch-LCD-1.28</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2040-Touch-LCD-1.28_config.html#tft-configs-rp2040-touch-lcd-1-28-tft-config-py">tft_configs/RP2040-Touch-LCD-1.28/tft_config.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2040-Touch-LCD-1.28_config.html#tft-configs-rp2040-touch-lcd-1-28-tft-buttons-py">tft_configs/RP2040-Touch-LCD-1.28/tft_buttons.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="configs/RP2_config.html">RP2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2_config.html#tft-configs-rp2-tft-config-py">tft_configs/RP2/tft_config.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="configs/RP2_config.html#tft-configs-rp2-tft-buttons-py">tft_configs/RP2/tft_buttons.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/alien.html">alien.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/arcs.html">arcs.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/bitarray.html">bitarray.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/bluemarble.html">bluemarble.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/chango.html">chango.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/feathers.html">feathers.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fonts.html">fonts.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/hello.html">hello.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/hello_world.html">hello_world.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/hershey.html">hershey.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/jpg_test.html">jpg_test.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/lines.html">lines.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/mono_fonts.html">mono_fonts.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/noto_fonts.html">noto_fonts.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/pinball.html">pinball.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/proverbs.html">proverbs.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/roids.html">roids.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/rotations.html">rotations.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/scroll.html">scroll.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/tiny_toasters.html">tiny_toasters.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/toasters.html">toasters.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/watch.html">watch.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fonts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bitmap-fonts">Bitmap Fonts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bitmap-font-conversion">Bitmap Font Conversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bitmap-font-samples">Bitmap Font Samples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#x8-rom-fonts">8x8 Rom Fonts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#x16-rom-fonts">8x16 Rom Fonts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">16x16 Rom Fonts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#x32-rom-fonts">16x32 Rom Fonts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#true-type-fonts">True Type fonts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#true-type-font-conversion">True-Type Font Conversion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils/create_png_examples.html">create_png_examples.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/create_png_examples.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/create_png_examples.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/image_converter.html">image_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/image_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/image_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/sprites_converter.html">sprites_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/sprites_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/sprites_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/text_font_converter.html">text_font_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/text_font_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/text_font_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils/write_font_converter.html">write_font_converter.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils/write_font_converter.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils/write_font_converter.html#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gc9a01c</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Fonts</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/fonts.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fonts">
+<h1>Fonts<a class="headerlink" href="#fonts" title="Link to this heading"></a></h1>
+<p>The driver supports two different types of fonts: fixed-size bitmap fonts extracted from PC VGA and Bios images and fixed or proportional width fonts converted from True-Type fonts. All fonts are stored in python modules and imported using the standard python import statement.</p>
+<p>Pre-compiling the font python modules to .mpy files will significantly reduce the memory required for the fonts. For even more memory savings, the font files can be converted to frozen bytecode and compiled into the MicroPython firmware.</p>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">Comparison of Bitmap and TrueType Fonts Attributes</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 43%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Attribute</p></th>
+<th class="head"><p>Bitmap Fonts</p></th>
+<th class="head"><p>TrueType Fonts</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Source</p></td>
+<td><p>PC BIOS images</p></td>
+<td><p>True-Type fonts</p></td>
+</tr>
+<tr class="row-odd"><td><p>Conversion Tool</p></td>
+<td><p>text_font_converter.py</p></td>
+<td><p>write_font_converter.py</p></td>
+</tr>
+<tr class="row-even"><td><p>Character Sets</p></td>
+<td><p>128 and 256 PC character sets</p></td>
+<td><p>User defined</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pixel Sizes</p></td>
+<td><p>8x8, 8x16, 16x6, and 16x32</p></td>
+<td><p>width 256 pixels or less</p></td>
+</tr>
+<tr class="row-even"><td><p>Rendering Method</p></td>
+<td><p>text() method</p></td>
+<td><p>write() method</p></td>
+</tr>
+</tbody>
+</table>
+<section id="bitmap-fonts">
+<h2>Bitmap Fonts<a class="headerlink" href="#bitmap-fonts" title="Link to this heading"></a></h2>
+<p>Bitmap fonts are available in 128 and 256 PC character sets in 8x8, 8x16, 16x6 and 16x32 pixel sizes. They are written using the text method.</p>
+<section id="bitmap-font-conversion">
+<h3>Bitmap Font Conversion<a class="headerlink" href="#bitmap-font-conversion" title="Link to this heading"></a></h3>
+<p>The <cite>utils</cite> directory contains the text_font_converter.py program used to convert PC BIOS bitmap fonts from the font-bin directory of spacerace’s <a class="reference external" href="https://github.com/spacerace/romfont">https://github.com/spacerace/romfont</a> repo.</p>
+<p>The utility converts all romfont bin files in the specified -input-directory (-i) and writes python font files to the specified -output-directory (-o).</p>
+<p>Characters included can be limited by using the -first-char (-f) and -last-char (-l) options.</p>
+<p>Example:</p>
+<blockquote>
+<div><p>text_font_converter.py -i font-bin -o fonts -f 32 -l 127</p>
+</div></blockquote>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Sample converted romfont font module.</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;converted from vga_8x8.bin &quot;&quot;&quot;</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="c1"># font width</span>
+<span class="linenos"> 4</span><span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="c1"># font height</span>
+<span class="linenos"> 7</span><span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="c1"># first character in front</span>
+<span class="linenos">10</span><span class="n">FIRST</span> <span class="o">=</span> <span class="mh">0x20</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="c1"># last character in font</span>
+<span class="linenos">13</span><span class="n">LAST</span> <span class="o">=</span> <span class="mh">0x7f</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="c1"># bitmap of each character from FIRST to LAST</span>
+<span class="linenos">16</span><span class="n">_FONT</span> <span class="o">=</span>\
+<span class="linenos">17</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span>\
+<span class="linenos">18</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x18\x3c\x3c\x18\x18\x00\x18\x00</span><span class="s1">&#39;</span>\
+<span class="linenos">19</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x66\x66\x24\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span>\
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="o">...</span> <span class="n">many</span> <span class="n">more</span> <span class="n">lines</span> <span class="n">of</span> <span class="n">data</span><span class="o">...</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x70\x18\x18\x0e\x18\x18\x70\x00</span><span class="s1">&#39;</span>\
+<span class="linenos">24</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x76\xdc\x00\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span>\
+<span class="linenos">25</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x10\x38\x6c\xc6\xc6\xfe\x00</span><span class="s1">&#39;</span>\
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="n">FONT</span> <span class="o">=</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">_FONT</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="bitmap-font-samples">
+<span id="id1"></span><h3>Bitmap Font Samples<a class="headerlink" href="#bitmap-font-samples" title="Link to this heading"></a></h3>
+<section id="x8-rom-fonts">
+<h4>8x8 Rom Fonts<a class="headerlink" href="#x8-rom-fonts" title="Link to this heading"></a></h4>
+<figure class="align-center" id="id5">
+<img alt="_images/vga1_8x8.png" src="_images/vga1_8x8.png" />
+<figcaption>
+<p><span class="caption-text">vga1_8x8.py: 128 Character 8x8 Font</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id6">
+<img alt="_images/vga2_8x8.png" src="_images/vga2_8x8.png" />
+<figcaption>
+<p><span class="caption-text">vga2_8x8.py: 256 Character 8x8 Font</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="x16-rom-fonts">
+<h4>8x16 Rom Fonts<a class="headerlink" href="#x16-rom-fonts" title="Link to this heading"></a></h4>
+<figure class="align-center" id="id7">
+<img alt="_images/vga1_8x16.png" src="_images/vga1_8x16.png" />
+<figcaption>
+<p><span class="caption-text">vga1_8x16.py: 128 Character 8x16 Font</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id8">
+<img alt="_images/vga2_8x16.png" src="_images/vga2_8x16.png" />
+<figcaption>
+<p><span class="caption-text">vga2_8x16.py: 256 Character 8x16 Font</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="id2">
+<h4>16x16 Rom Fonts<a class="headerlink" href="#id2" title="Link to this heading"></a></h4>
+<figure class="align-center" id="id9">
+<img alt="_images/vga1_16x16.png" src="_images/vga1_16x16.png" />
+<figcaption>
+<p><span class="caption-text">vga1_16x16.py: 128 Character 16x16 Thin Font</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id10">
+<img alt="_images/vga1_bold_16x16.png" src="_images/vga1_bold_16x16.png" />
+<figcaption>
+<p><span class="caption-text">vga1_bold_16x16.py: 128 Character 16x16 Bold Font</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id11">
+<img alt="_images/vga2_16x16.png" src="_images/vga2_16x16.png" />
+<figcaption>
+<p><span class="caption-text">vga2_16x16.py: 256 Character 16x16 Thin Font</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id12">
+<img alt="_images/vga2_bold_16x16.png" src="_images/vga2_bold_16x16.png" />
+<figcaption>
+<p><span class="caption-text">vga2_bold_16x16.py: 256 Character 16x16 Bold Font</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="x32-rom-fonts">
+<h4>16x32 Rom Fonts<a class="headerlink" href="#x32-rom-fonts" title="Link to this heading"></a></h4>
+<figure class="align-center" id="id13">
+<img alt="_images/vga1_16x32.png" src="_images/vga1_16x32.png" />
+<figcaption>
+<p><span class="caption-text">vga1_16x32.py: 128 Character 16x32 Thin Font</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id14">
+<img alt="_images/vga1_bold_16x32.png" src="_images/vga1_bold_16x32.png" />
+<figcaption>
+<p><span class="caption-text">vga1_bold_16x32.py: 128 Character 16x32 Bold Font</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id15">
+<img alt="_images/vga2_16x32.png" src="_images/vga2_16x32.png" />
+<figcaption>
+<p><span class="caption-text">vga2_16x32.py: 256 Character 16x32 Thin Font</span><a class="headerlink" href="#id15" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<figure class="align-center" id="id16">
+<img alt="_images/vga2_bold_16x32.png" src="_images/vga2_bold_16x32.png" />
+<figcaption>
+<p><span class="caption-text">vga2_bold_16x32.py: 256 Character 16x32 Bold Font</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+<section id="true-type-fonts">
+<h2>True Type fonts<a class="headerlink" href="#true-type-fonts" title="Link to this heading"></a></h2>
+<p>The True-Type fonts can be converted to any size as long as the widest character is 256 pixels or less. They are written using the write method.</p>
+<section id="true-type-font-conversion">
+<h3>True-Type Font Conversion<a class="headerlink" href="#true-type-font-conversion" title="Link to this heading"></a></h3>
+<p>The <cite>utils</cite> directory contains the <cite>write_font_converter.py</cite> program used to convert True-Type font into bitmap font modules. Use the -h option to see details of the available options.  The <cite>write_font_converter.py</cite> program uses font handling classes from Dan Bader blog post on using freetype <a class="reference external" href="http://dbader.org/blog/monochrome-font-rendering-with-freetype-and-python">http://dbader.org/blog/monochrome-font-rendering-with-freetype-and-python</a> and the negative glyph.left fix from peterhinch’s font conversion program <a class="reference external" href="https://github.com/peterhinch/micropython-font-to-py">https://github.com/peterhinch/micropython-font-to-py</a>.</p>
+<p>The utility requires the python freetype module.</p>
+<p>Example use:</p>
+<ul class="simple">
+<li><p>./write_font_converter.py NotoSans-Regular.ttf 32 -s “0123456789ABCEDF”</p></li>
+<li><p>./write_font_converter.py Chango-Regular.ttf 16 -c 0x20-0x7f</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">Sample converted TrueType font module.</span><a class="headerlink" href="#id17" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="linenos"> 2</span><span class="c1"># Converted from Chango-Regular.ttf using:</span>
+<span class="linenos"> 3</span><span class="c1">#     ./write_font_converter.py Chango-Regular.ttf 16 -c 0x20-0x7f</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="c1"># Maps the order of the character data</span>
+<span class="linenos"> 6</span><span class="n">MAP</span> <span class="o">=</span> <span class="s2">&quot; !</span><span class="se">\&quot;</span><span class="s2">#$%&amp;&#39;()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[</span><span class="se">\\</span><span class="s2">]^_`abcdefghijklmnopqrstuvwxyz{|}~&quot;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="c1"># Number of color bits per pixel, currently only 1 is used but could be</span>
+<span class="linenos"> 9</span><span class="c1"># increased to support antialiased or smoothed fonts in the future.</span>
+<span class="linenos">10</span><span class="n">BPP</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="c1"># Font height</span>
+<span class="linenos">13</span><span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="c1"># Font max width</span>
+<span class="linenos">16</span><span class="n">MAX_WIDTH</span> <span class="o">=</span> <span class="mi">24</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="c1"># one byte per character table of widths in the same order as the MAP string</span>
+<span class="linenos">19</span><span class="n">_WIDTHS</span> <span class="o">=</span> \
+<span class="linenos">20</span>    <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x06\x08\x0a\x0e\x0d\x18\x10\x06\x08\x08\x0a\x0d\x06\x08\x06\x0b</span><span class="s1">&#39;</span>\
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="o">...</span> <span class="n">more</span> <span class="n">lines</span> <span class="n">of</span> <span class="n">data</span><span class="o">...</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>    <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x0d\x0d\x0b\x0a\x0b\x0e\x0c\x12\x0d\x0c\x0b\x09\x06\x09\x0e\x0b</span><span class="s1">&#39;</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="c1"># OFFSET_WIDTH bytes per character in the same order as the MAP string</span>
+<span class="linenos">27</span><span class="c1"># to the start of each character in bits.</span>
+<span class="linenos">28</span><span class="n">OFFSET_WIDTH</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="linenos">29</span><span class="n">_OFFSETS</span> <span class="o">=</span> \
+<span class="linenos">30</span>    <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x66\x00\xee\x01\x98\x02\x86\x03\x63\x04\xfb\x06\x0b</span><span class="s1">&#39;</span>\
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="o">...</span> <span class="n">more</span> <span class="n">lines</span> <span class="n">of</span> <span class="n">data</span><span class="o">...</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span>    <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x49\x94\x4a\x71\x4b\x3d\x4b\xf8\x4c\x91\x4c\xf7\x4d\x90\x4e\x7e</span><span class="s1">&#39;</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="c1"># character bitmaps per character in the same order as the MAP string.</span>
+<span class="linenos">37</span><span class="c1"># Note: character data may not start on byte boundaries</span>
+<span class="linenos">38</span><span class="n">_BITMAPS</span> <span class="o">=</span>\
+<span class="linenos">39</span>    <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x61</span><span class="s1">&#39;</span>\
+<span class="linenos">40</span>
+<span class="linenos">41</span>    <span class="o">...</span> <span class="n">many</span> <span class="n">more</span> <span class="n">lines</span> <span class="n">of</span> <span class="n">data</span><span class="o">...</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>    <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x3d\xe3\xfc\x00\x00\x00\x00\x00</span><span class="s1">&#39;</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="n">WIDTHS</span> <span class="o">=</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">_WIDTHS</span><span class="p">)</span>
+<span class="linenos">46</span><span class="n">OFFSETS</span> <span class="o">=</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">_OFFSETS</span><span class="p">)</span>
+<span class="linenos">47</span><span class="n">BITMAPS</span> <span class="o">=</span> <span class="nb">memoryview</span><span class="p">(</span><span class="n">_BITMAPS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples/watch.html" class="btn btn-neutral float-left" title="watch.py" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

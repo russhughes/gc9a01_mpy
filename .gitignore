@@ -1,10 +1,14 @@
 .vscode
 .idea
 __pycache__
-sphinx/build
+sphinx/_build
+sphinx/_static/BAK
+pics/OLD
 *~
 *.pyc
 *.o
 *.P
+*.mpy
 .DS_Store
 .history
+TODO.md

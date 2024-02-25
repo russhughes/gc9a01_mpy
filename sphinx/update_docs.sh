@@ -238,6 +238,4 @@ update_examples
 update_utils
 hack_index
 make html
-sudo rm -Rf /htdocs/gc9a01c/*
-sudo /usr/bin/rsync --progress --delete --progress -avz _build/html/* /htdocs/gc9a01c/ > /dev/null
 sudo /usr/bin/rsync --progress --delete --progress -avz _build/html/* ../docs/ > /dev/null

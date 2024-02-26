@@ -238,4 +238,6 @@ update_examples
 update_utils
 hack_index
 make html
-sudo /usr/bin/rsync --progress --delete --progress -avz _build/html/* ../docs/ > /dev/null
+/usr/bin/rsync --progress --delete --progress -avz _build/html/* ../docs/ > /dev/null
+touch ../docs/.nojekyll
+make clean

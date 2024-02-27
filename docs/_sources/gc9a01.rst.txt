@@ -500,7 +500,7 @@ See `watch.py` for an example.
         * ``cy``: y coordinate of the center of rotation (default: 0)
 
 
-.. method:: draw_arc(`x`, `y`, `start_angle`, `end_angle`, `segments`, `rx`, `ry`, `w`, `color`)
+.. method:: arc(`x`, `y`, `start_angle`, `end_angle`, `segments`, `rx`, `ry`, `w`, `color`)
 
 Draw an arc.
 
@@ -512,7 +512,7 @@ Draw an arc.
         * ``segments``: number of segments to draw
         * ``rx``: x radius of the arc
         * ``ry``: y radius of the arc
-        * ``w``: width of the arc
+        * ``w``: width of the arc (currently limited to 1)
         * ``color``: color of the arc
 
 

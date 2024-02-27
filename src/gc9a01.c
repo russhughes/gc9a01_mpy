@@ -2397,7 +2397,7 @@ void draw_arc(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, int16_t start_a
     line(self, x_start, y_start, x_end, y_end, color);
 }
 
-/// #### .draw_arc(`x`, `y`, `start_angle`, `end_angle`, `segments`, `rx`, `ry`, `w`, `color`)
+/// #### .arc(`x`, `y`, `start_angle`, `end_angle`, `segments`, `rx`, `ry`, `w`, `color`)
 /// Draw an arc.
 ///
 ///     * **Required Parameters:**
@@ -2408,7 +2408,7 @@ void draw_arc(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, int16_t start_a
 ///         * ``segments``: number of segments to draw
 ///         * ``rx``: x radius of the arc
 ///         * ``ry``: y radius of the arc
-///         * ``w``: width of the arc
+///         * ``w``: width of the arc (currently limited to 1)
 ///         * ``color``: color of the arc
 
 STATIC mp_obj_t gc9a01_GC9A01_arc(size_t n_args, const mp_obj_t *args) {

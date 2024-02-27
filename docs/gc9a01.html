@@ -89,7 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#polygon_center"><code class="docutils literal notranslate"><span class="pre">polygon_center()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#polygon"><code class="docutils literal notranslate"><span class="pre">polygon()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fill_polygon"><code class="docutils literal notranslate"><span class="pre">fill_polygon()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#draw_arc"><code class="docutils literal notranslate"><span class="pre">draw_arc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arc"><code class="docutils literal notranslate"><span class="pre">arc()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fill_arc"><code class="docutils literal notranslate"><span class="pre">fill_arc()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#bounding"><code class="docutils literal notranslate"><span class="pre">bounding()</span></code></a></li>
 </ul>
@@ -1076,8 +1076,8 @@ See <cite>watch.py</cite> for an example.</p>
 </ul>
 </div></blockquote>
 <dl class="py method">
-<dt class="sig sig-object py" id="draw_arc">
-<span class="sig-name descname"><span class="pre">draw_arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`start_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`end_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`segments`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`rx`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`ry`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`w`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw_arc" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="arc">
+<span class="sig-name descname"><span class="pre">arc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">`x`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`y`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`start_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`end_angle`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`segments`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`rx`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`ry`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`w`</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">`color`</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#arc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <p>Draw an arc.</p>
@@ -1092,7 +1092,7 @@ See <cite>watch.py</cite> for an example.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">segments</span></code>: number of segments to draw</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rx</span></code>: x radius of the arc</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ry</span></code>: y radius of the arc</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: width of the arc</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">w</span></code>: width of the arc (currently limited to 1)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">color</span></code>: color of the arc</p></li>
 </ul>
 </dd>

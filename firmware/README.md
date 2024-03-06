@@ -176,8 +176,8 @@
 ### W5500_EVB_PICO
    - [firmware.uf2](W5500_EVB_PICO/firmware.uf2)
 
-### vWAVESHARE_RP2040_LCD_1.28
-   - [firmware.uf2](WAVESHARE_RP2040_LCD_1.28/firmware.uf2)
+### WAVESHARE_RP2040_LCD_1.28
+   - [firmware.uf2](RPI_PICO/firmware.uf2)
 
 ### WEACTSTUDIO
    - [firmware.uf2](WEACTSTUDIO/firmware.uf2)

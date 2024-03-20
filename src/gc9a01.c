@@ -170,16 +170,16 @@ mp_obj_t gc9a01_GC9A01_make_new(const mp_obj_type_t *type, size_t n_args, size_t
 /// #### .init()
 /// Initialize the display.
 
-STATIC mp_obj_t gc9a01_GC9A01_init(mp_obj_t self_in);
+static mp_obj_t gc9a01_GC9A01_init(mp_obj_t self_in);
 
 
-STATIC void gc9a01_GC9A01_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+static void gc9a01_GC9A01_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     mp_printf(print, "<GC9A01 width=%u, height=%u, spi=%p>", self->width, self->height, self->spi_obj);
 }
 
-STATIC void write_spi(mp_obj_base_t *spi_obj, const uint8_t *buf, int len) {
+static void write_spi(mp_obj_base_t *spi_obj, const uint8_t *buf, int len) {
     #if MICROPY_OBJ_TYPE_REPR == MICROPY_OBJ_TYPE_REPR_SLOT_INDEX
     mp_machine_spi_p_t *spi_p = (mp_machine_spi_p_t *)MP_OBJ_TYPE_GET_SLOT(spi_obj->type, protocol);
     #else
@@ -188,7 +188,7 @@ STATIC void write_spi(mp_obj_base_t *spi_obj, const uint8_t *buf, int len) {
     spi_p->transfer(spi_obj, len, buf, NULL);
 }
 
-STATIC void write_cmd(gc9a01_GC9A01_obj_t *self, uint8_t cmd, const uint8_t *data, int len) {
+static void write_cmd(gc9a01_GC9A01_obj_t *self, uint8_t cmd, const uint8_t *data, int len) {
     CS_LOW()
     if (cmd) {
         DC_LOW();
@@ -201,7 +201,7 @@ STATIC void write_cmd(gc9a01_GC9A01_obj_t *self, uint8_t cmd, const uint8_t *dat
     CS_HIGH()
 }
 
-STATIC void set_window(gc9a01_GC9A01_obj_t *self, uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
+static void set_window(gc9a01_GC9A01_obj_t *self, uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
     if (x0 > x1 || x1 >= self->width) {
         return;
     }
@@ -232,7 +232,7 @@ STATIC void set_window(gc9a01_GC9A01_obj_t *self, uint16_t x0, uint16_t y0, uint
     write_cmd(self, GC9A01_RAMWR, NULL, 0);
 }
 
-STATIC void fill_color_buffer(mp_obj_base_t *spi_obj, uint16_t color, int length) {
+static void fill_color_buffer(mp_obj_base_t *spi_obj, uint16_t color, int length) {
     const int buffer_pixel_size = 128;
     int chunks = length / buffer_pixel_size;
     int rest = length % buffer_pixel_size;
@@ -304,7 +304,7 @@ void fast_hline(gc9a01_GC9A01_obj_t *self, int16_t x, int16_t y, int16_t w, uint
     }
 }
 
-STATIC void fast_vline(gc9a01_GC9A01_obj_t *self, int16_t x, int16_t y, int16_t h, uint16_t color) {
+static void fast_vline(gc9a01_GC9A01_obj_t *self, int16_t x, int16_t y, int16_t h, uint16_t color) {
     if ((self->options & OPTIONS_WRAP) == 0) {
         if (x >= 0 && self->width > x && self->height > y) {
             if (0 > y) {
@@ -333,7 +333,7 @@ STATIC void fast_vline(gc9a01_GC9A01_obj_t *self, int16_t x, int16_t y, int16_t 
     }
 }
 
-STATIC void line(gc9a01_GC9A01_obj_t *self, int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t color) {
+static void line(gc9a01_GC9A01_obj_t *self, int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t color) {
 
     bool steep = ABS(y1 - y0) > ABS(x1 - x0);
 
@@ -399,7 +399,7 @@ STATIC void line(gc9a01_GC9A01_obj_t *self, int16_t x0, int16_t y0, int16_t x1, 
 /// #### .reset()
 /// Reset the display using the hardware reset pin.
 
-STATIC mp_obj_t gc9a01_GC9A01_hard_reset(mp_obj_t self_in) {
+static mp_obj_t gc9a01_GC9A01_hard_reset(mp_obj_t self_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     CS_LOW();
@@ -420,7 +420,7 @@ MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_hard_reset_obj, gc9a01_GC9A01_hard_reset
 /// #### .soft_reset()
 /// Reset the display using the software reset command.
 
-STATIC mp_obj_t gc9a01_GC9A01_soft_reset(mp_obj_t self_in) {
+static mp_obj_t gc9a01_GC9A01_soft_reset(mp_obj_t self_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     write_cmd(self, GC9A01_SWRESET, NULL, 0);
@@ -438,7 +438,7 @@ MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_soft_reset_obj, gc9a01_GC9A01_soft_reset
 ///     * **Required Parameters:**
 ///         * ``value``: True/False
 
-STATIC mp_obj_t gc9a01_GC9A01_sleep_mode(mp_obj_t self_in, mp_obj_t value) {
+static mp_obj_t gc9a01_GC9A01_sleep_mode(mp_obj_t self_in, mp_obj_t value) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     if (mp_obj_is_true(value)) {
@@ -462,7 +462,7 @@ MP_DEFINE_CONST_FUN_OBJ_2(gc9a01_GC9A01_sleep_mode_obj, gc9a01_GC9A01_sleep_mode
 ///         * ``x1``: x position of the bottom right corner
 ///         * ``y1``: y position of the bottom right corner
 
-STATIC mp_obj_t gc9a01_GC9A01_set_window(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_set_window(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x0 = mp_obj_get_int(args[1]);
     mp_int_t x1 = mp_obj_get_int(args[2]);
@@ -474,7 +474,7 @@ STATIC mp_obj_t gc9a01_GC9A01_set_window(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_set_window_obj, 5, 5, gc9a01_GC9A01_set_window);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_set_window_obj, 5, 5, gc9a01_GC9A01_set_window);
 
 
 //
@@ -482,7 +482,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_set_window_obj, 5, 5, g
 // Turn the color inversion mode on or off (True/False).
 //
 
-STATIC mp_obj_t gc9a01_GC9A01_inversion_mode(mp_obj_t self_in, mp_obj_t value) {
+static mp_obj_t gc9a01_GC9A01_inversion_mode(mp_obj_t self_in, mp_obj_t value) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     if (mp_obj_is_true(value)) {
@@ -509,7 +509,7 @@ MP_DEFINE_CONST_FUN_OBJ_2(gc9a01_GC9A01_inversion_mode_obj, gc9a01_GC9A01_invers
 /// Circle/Fill_Circle by https://github.com/c-logic
 /// https://github.com/russhughes/st7789_mpy/pull/46 https://github.com/c-logic/st7789_mpy.git patch-1
 
-STATIC mp_obj_t gc9a01_GC9A01_circle(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_circle(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t xm = mp_obj_get_int(args[1]);
     mp_int_t ym = mp_obj_get_int(args[2]);
@@ -547,7 +547,7 @@ STATIC mp_obj_t gc9a01_GC9A01_circle(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_circle_obj, 5, 5, gc9a01_GC9A01_circle);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_circle_obj, 5, 5, gc9a01_GC9A01_circle);
 
 
 /// #### .fill_circle(`x`, `y`, `r`, `color`)
@@ -562,7 +562,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_circle_obj, 5, 5, gc9a0
 /// Circle/Fill_Circle by https://github.com/c-logic
 /// https://github.com/russhughes/st7789_mpy/pull/46 https://github.com/c-logic/st7789_mpy.git patch-1
 
-STATIC mp_obj_t gc9a01_GC9A01_fill_circle(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_fill_circle(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t xm = mp_obj_get_int(args[1]);
     mp_int_t ym = mp_obj_get_int(args[2]);
@@ -594,7 +594,7 @@ STATIC mp_obj_t gc9a01_GC9A01_fill_circle(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_circle_obj, 5, 5, gc9a01_GC9A01_fill_circle);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_circle_obj, 5, 5, gc9a01_GC9A01_fill_circle);
 
 
 /// #### .fill_rect(`x`, `y`, `w`, `h`, `color`)
@@ -607,7 +607,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_circle_obj, 5, 5, 
 ///         * ``h``: height
 ///         * ``color``: color of the rectangle
 
-STATIC mp_obj_t gc9a01_GC9A01_fill_rect(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_fill_rect(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x = mp_obj_get_int(args[1]);
     mp_int_t y = mp_obj_get_int(args[2]);
@@ -636,7 +636,7 @@ STATIC mp_obj_t gc9a01_GC9A01_fill_rect(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_rect_obj, 6, 6, gc9a01_GC9A01_fill_rect);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_rect_obj, 6, 6, gc9a01_GC9A01_fill_rect);
 
 
 /// #### .fill(`color`)
@@ -645,7 +645,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_rect_obj, 6, 6, gc
 ///     * **Required Parameters:**
 ///         * ``color``: color to fill the display with
 
-STATIC mp_obj_t gc9a01_GC9A01_fill(mp_obj_t self_in, mp_obj_t _color) {
+static mp_obj_t gc9a01_GC9A01_fill(mp_obj_t self_in, mp_obj_t _color) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
     mp_int_t color = mp_obj_get_int(_color);
 
@@ -658,7 +658,7 @@ STATIC mp_obj_t gc9a01_GC9A01_fill(mp_obj_t self_in, mp_obj_t _color) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_2(gc9a01_GC9A01_fill_obj, gc9a01_GC9A01_fill);
+static MP_DEFINE_CONST_FUN_OBJ_2(gc9a01_GC9A01_fill_obj, gc9a01_GC9A01_fill);
 
 
 /// #### .pixel(`x`, `y`, `color`)
@@ -669,7 +669,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_2(gc9a01_GC9A01_fill_obj, gc9a01_GC9A01_fill);
 ///         * ``y``: row position of the pixel
 ///         * ``color``: color of the pixel
 
-STATIC mp_obj_t gc9a01_GC9A01_pixel(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_pixel(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x = mp_obj_get_int(args[1]);
     mp_int_t y = mp_obj_get_int(args[2]);
@@ -680,7 +680,7 @@ STATIC mp_obj_t gc9a01_GC9A01_pixel(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pixel_obj, 4, 4, gc9a01_GC9A01_pixel);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pixel_obj, 4, 4, gc9a01_GC9A01_pixel);
 
 
 /// #### .line(`x0`, `y0`, `x1`, `y1`, `color`)
@@ -693,7 +693,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pixel_obj, 4, 4, gc9a01
 ///         * ``y1``: y position of the end point
 ///         * ``color``: color of the line
 
-STATIC mp_obj_t gc9a01_GC9A01_line(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_line(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x0 = mp_obj_get_int(args[1]);
     mp_int_t y0 = mp_obj_get_int(args[2]);
@@ -706,7 +706,7 @@ STATIC mp_obj_t gc9a01_GC9A01_line(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_line_obj, 6, 6, gc9a01_GC9A01_line);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_line_obj, 6, 6, gc9a01_GC9A01_line);
 
 
 /// #### .blit_buffer(`buffer`, `x`, `y`, `w`, `h`)
@@ -719,7 +719,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_line_obj, 6, 6, gc9a01_
 ///         * ``w``: width of the buffer
 ///         * ``h``: height of the buffer
 
-STATIC mp_obj_t gc9a01_GC9A01_blit_buffer(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_blit_buffer(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_buffer_info_t buf_info;
 
@@ -751,7 +751,7 @@ STATIC mp_obj_t gc9a01_GC9A01_blit_buffer(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_blit_buffer_obj, 6, 6, gc9a01_GC9A01_blit_buffer);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_blit_buffer_obj, 6, 6, gc9a01_GC9A01_blit_buffer);
 
 
 /// #### .draw(`font`, `string|int`, `x`, `y`, {`color` , `scale`})
@@ -770,7 +770,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_blit_buffer_obj, 6, 6, 
 ///         * ``color``: color of the text, defaults to `WHITE`
 ///         * ``scale``: scale of the text, defaults to 1
 
-STATIC mp_obj_t gc9a01_GC9A01_draw(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_draw(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     char single_char_s[] = {0, 0};
     const char *s;
@@ -866,7 +866,7 @@ STATIC mp_obj_t gc9a01_GC9A01_draw(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_draw_obj, 5, 7, gc9a01_GC9A01_draw);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_draw_obj, 5, 7, gc9a01_GC9A01_draw);
 
 
 /// #### .draw_len(`font`, `string|int` {, `scale`})
@@ -882,7 +882,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_draw_obj, 5, 7, gc9a01_
 ///     * **Returns:**
 ///         * ``int``: length of the string in pixels
 
-STATIC mp_obj_t gc9a01_GC9A01_draw_len(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_draw_len(size_t n_args, const mp_obj_t *args) {
     char single_char_s[] = {0, 0};
     const char *s;
     mp_obj_module_t *hershey = MP_OBJ_TO_PTR(args[1]);
@@ -939,10 +939,10 @@ STATIC mp_obj_t gc9a01_GC9A01_draw_len(size_t n_args, const mp_obj_t *args) {
     return mp_obj_new_int((int)(print_width * scale + MICROPY_FLOAT_CONST(0.5)));
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_draw_len_obj, 3, 4, gc9a01_GC9A01_draw_len);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_draw_len_obj, 3, 4, gc9a01_GC9A01_draw_len);
 
 
-STATIC uint32_t bs_bit = 0;
+static uint32_t bs_bit = 0;
 uint8_t *bitmap_data = NULL;
 
 uint8_t get_color(uint8_t bpp) {
@@ -978,7 +978,7 @@ mp_obj_t dict_lookup(mp_obj_t self_in, mp_obj_t index) {
 ///     * **Returns:**
 ///         * ``int``: width of the string in pixels
 
-STATIC mp_obj_t gc9a01_GC9A01_write_len(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_write_len(size_t n_args, const mp_obj_t *args) {
     mp_obj_module_t *font = MP_OBJ_TO_PTR(args[1]);
     mp_obj_dict_t *dict = MP_OBJ_TO_PTR(font->globals);
     mp_obj_t widths_data_buff = mp_obj_dict_get(dict, MP_OBJ_NEW_QSTR(MP_QSTR_WIDTHS));
@@ -1015,7 +1015,7 @@ STATIC mp_obj_t gc9a01_GC9A01_write_len(size_t n_args, const mp_obj_t *args) {
     }
     return mp_obj_new_int(print_width);
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_write_len_obj, 3, 3, gc9a01_GC9A01_write_len);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_write_len_obj, 3, 3, gc9a01_GC9A01_write_len);
 
 
 
@@ -1044,7 +1044,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_write_len_obj, 3, 3, gc
 ///     * **Returns:**
 ///         * ``int``: The width of the string or character in pixels.
 
-STATIC mp_obj_t gc9a01_GC9A01_write(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_write(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_obj_module_t *font = MP_OBJ_TO_PTR(args[1]);
 
@@ -1148,7 +1148,7 @@ STATIC mp_obj_t gc9a01_GC9A01_write(size_t n_args, const mp_obj_t *args) {
     return mp_obj_new_int(print_width);
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_write_obj, 5, 7, gc9a01_GC9A01_write);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_write_obj, 5, 7, gc9a01_GC9A01_write);
 
 
 /// #### .bitmap(`bitmap`, `x`, `y` {, `idx`})
@@ -1178,7 +1178,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_write_obj, 5, 7, gc9a01
 /// If you specify a buffer_size during the display initialization it must be
 /// large enough to hold the one character (HEIGHT * WIDTH * 2).
 
-STATIC mp_obj_t gc9a01_GC9A01_bitmap(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_bitmap(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_obj_module_t *bitmap = MP_OBJ_TO_PTR(args[1]);
     mp_int_t x = mp_obj_get_int(args[2]);
@@ -1252,7 +1252,7 @@ STATIC mp_obj_t gc9a01_GC9A01_bitmap(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_bitmap_obj, 4, 5, gc9a01_GC9A01_bitmap);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_bitmap_obj, 4, 5, gc9a01_GC9A01_bitmap);
 
 
 /// #### .pbitmap(`bitmap`, `x`, `y` {, `idx`})
@@ -1267,7 +1267,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_bitmap_obj, 4, 5, gc9a0
 ///     * **Optional Parameters:**
 ///         * ``idx``: index of the bitmap to draw (default: 0)
 
-STATIC mp_obj_t gc9a01_GC9A01_pbitmap(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_pbitmap(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_obj_module_t *bitmap = MP_OBJ_TO_PTR(args[1]);
     mp_int_t x = mp_obj_get_int(args[2]);
@@ -1339,7 +1339,7 @@ STATIC mp_obj_t gc9a01_GC9A01_pbitmap(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pbitmap_obj, 4, 5, gc9a01_GC9A01_pbitmap);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pbitmap_obj, 4, 5, gc9a01_GC9A01_pbitmap);
 
 
 /// #### .text(`font`, `string|int`, `x`, `y` {, `fg_color`, `bg_color`})
@@ -1358,7 +1358,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_pbitmap_obj, 4, 5, gc9a
 ///         * ``fg_color``: foreground color of the text, defaults to `WHITE`
 ///         * ``bg_color``: background color of the text, defaults to `BLACK`
 
-STATIC mp_obj_t gc9a01_GC9A01_text(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_text(size_t n_args, const mp_obj_t *args) {
     char single_char_s[2] = { 0, 0};
     const char *str;
 
@@ -1453,10 +1453,10 @@ STATIC mp_obj_t gc9a01_GC9A01_text(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_text_obj, 5, 7, gc9a01_GC9A01_text);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_text_obj, 5, 7, gc9a01_GC9A01_text);
 
 
-STATIC void set_rotation(gc9a01_GC9A01_obj_t *self) {
+static void set_rotation(gc9a01_GC9A01_obj_t *self) {
     uint8_t madctl_value = GC9A01_MADCTL_BGR;
 
     if (self->rotation == 0) {                      // Portrait
@@ -1518,7 +1518,7 @@ STATIC void set_rotation(gc9a01_GC9A01_obj_t *self) {
 ///             * ``6``: inverted portrait mirrored
 ///             * ``7``: inverted landscape mirrored
 
-STATIC mp_obj_t gc9a01_GC9A01_rotation(mp_obj_t self_in, mp_obj_t value) {
+static mp_obj_t gc9a01_GC9A01_rotation(mp_obj_t self_in, mp_obj_t value) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
     mp_int_t rotation = mp_obj_get_int(value) % 8;
 
@@ -1536,7 +1536,7 @@ MP_DEFINE_CONST_FUN_OBJ_2(gc9a01_GC9A01_rotation_obj, gc9a01_GC9A01_rotation);
 ///     * **Returns:**
 ///         * ``(int)``: width of the display
 
-STATIC mp_obj_t gc9a01_GC9A01_width(mp_obj_t self_in) {
+static mp_obj_t gc9a01_GC9A01_width(mp_obj_t self_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     return mp_obj_new_int(self->width);
@@ -1551,7 +1551,7 @@ MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_width_obj, gc9a01_GC9A01_width);
 ///     * **Returns:**
 ///         * ``(int)``: height of the display
 
-STATIC mp_obj_t gc9a01_GC9A01_height(mp_obj_t self_in) {
+static mp_obj_t gc9a01_GC9A01_height(mp_obj_t self_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     return mp_obj_new_int(self->height);
@@ -1568,7 +1568,7 @@ MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_height_obj, gc9a01_GC9A01_height);
 ///         * ``vsa``: vertical scrolling area
 ///         * ``bfa``: bottom fixed area
 
-STATIC mp_obj_t gc9a01_GC9A01_vscrdef(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_vscrdef(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t tfa = mp_obj_get_int(args[1]);
     mp_int_t vsa = mp_obj_get_int(args[2]);
@@ -1589,7 +1589,7 @@ MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_vscrdef_obj, 4, 4, gc9a01_GC9A
 ///     * **Required Parameters:**
 ///         * ``vssa``: vertical scrolling start address
 
-STATIC mp_obj_t gc9a01_GC9A01_vscsad(mp_obj_t self_in, mp_obj_t vssa_in) {
+static mp_obj_t gc9a01_GC9A01_vscsad(mp_obj_t self_in, mp_obj_t vssa_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
     mp_int_t vssa = mp_obj_get_int(vssa_in);
     uint8_t buf[2] = {(vssa) >> 8, (vssa) & 0xFF};
@@ -1605,7 +1605,7 @@ MP_DEFINE_CONST_FUN_OBJ_2(gc9a01_GC9A01_vscsad_obj, gc9a01_GC9A01_vscsad);
 /// #### .on()
 /// Turn on the backlight pin if one was defined during init.
 
-STATIC mp_obj_t gc9a01_GC9A01_on(mp_obj_t self_in) {
+static mp_obj_t gc9a01_GC9A01_on(mp_obj_t self_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     DISP_HIGH();
@@ -1620,7 +1620,7 @@ MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_on_obj, gc9a01_GC9A01_on);
 /// #### .off()
 /// Turn off the backlight pin if one was defined during init.
 
-STATIC mp_obj_t gc9a01_GC9A01_off(mp_obj_t self_in) {
+static mp_obj_t gc9a01_GC9A01_off(mp_obj_t self_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     DISP_LOW();
@@ -1641,7 +1641,7 @@ MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_off_obj, gc9a01_GC9A01_off);
 ///         * ``w``: width of the line
 ///         * ``color``: color of the line
 
-STATIC mp_obj_t gc9a01_GC9A01_hline(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_hline(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x = mp_obj_get_int(args[1]);
     mp_int_t y = mp_obj_get_int(args[2]);
@@ -1653,7 +1653,7 @@ STATIC mp_obj_t gc9a01_GC9A01_hline(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_hline_obj, 5, 5, gc9a01_GC9A01_hline);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_hline_obj, 5, 5, gc9a01_GC9A01_hline);
 
 
 /// #### .vline(`x`, `y`, `h`, `color`)
@@ -1665,7 +1665,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_hline_obj, 5, 5, gc9a01
 ///         * ``h``: height of the line
 ///         * ``color``: color of the line
 
-STATIC mp_obj_t gc9a01_GC9A01_vline(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_vline(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x = mp_obj_get_int(args[1]);
     mp_int_t y = mp_obj_get_int(args[2]);
@@ -1677,7 +1677,7 @@ STATIC mp_obj_t gc9a01_GC9A01_vline(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_vline_obj, 5, 5, gc9a01_GC9A01_vline);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_vline_obj, 5, 5, gc9a01_GC9A01_vline);
 
 
 /// #### .rect(`x`, `y`, `w`, `h`, `color`)
@@ -1690,7 +1690,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_vline_obj, 5, 5, gc9a01
 ///         * ``h``: height of the rectangle
 ///         * ``color``: color of the rectangle
 
-STATIC mp_obj_t gc9a01_GC9A01_rect(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_rect(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x = mp_obj_get_int(args[1]);
     mp_int_t y = mp_obj_get_int(args[2]);
@@ -1705,7 +1705,7 @@ STATIC mp_obj_t gc9a01_GC9A01_rect(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_rect_obj, 6, 6, gc9a01_GC9A01_rect);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_rect_obj, 6, 6, gc9a01_GC9A01_rect);
 
 
 /// #### .offset(`x`, `y`)
@@ -1715,7 +1715,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_rect_obj, 6, 6, gc9a01_
 ///         * ``x``: x offset
 ///         * ``y``: y offset
 
-STATIC mp_obj_t gc9a01_GC9A01_offset(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_offset(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t xstart = mp_obj_get_int(args[1]);
     mp_int_t ystart = mp_obj_get_int(args[2]);
@@ -1726,10 +1726,10 @@ STATIC mp_obj_t gc9a01_GC9A01_offset(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_offset_obj, 3, 3, gc9a01_GC9A01_offset);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_offset_obj, 3, 3, gc9a01_GC9A01_offset);
 
 
-STATIC uint16_t color565(uint8_t r, uint8_t g, uint8_t b) {
+static uint16_t color565(uint8_t r, uint8_t g, uint8_t b) {
     return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | ((b & 0xF8) >> 3);
 }
 
@@ -1744,15 +1744,15 @@ STATIC uint16_t color565(uint8_t r, uint8_t g, uint8_t b) {
 ///     * **return value**:
 ///         * ``(int)``:  16-bit RGB565 value
 
-STATIC mp_obj_t gc9a01_color565(mp_obj_t r, mp_obj_t g, mp_obj_t b) {
+static mp_obj_t gc9a01_color565(mp_obj_t r, mp_obj_t g, mp_obj_t b) {
     return MP_OBJ_NEW_SMALL_INT(color565((uint8_t)mp_obj_get_int(r), (uint8_t)mp_obj_get_int(g), (uint8_t)mp_obj_get_int(b)
         ));
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_3(gc9a01_color565_obj, gc9a01_color565);
+static MP_DEFINE_CONST_FUN_OBJ_3(gc9a01_color565_obj, gc9a01_color565);
 
 
-STATIC void map_bitarray_to_rgb565(uint8_t const *bitarray, uint8_t *buffer, int length, int width, uint16_t color, uint16_t bg_color) {
+static void map_bitarray_to_rgb565(uint8_t const *bitarray, uint8_t *buffer, int length, int width, uint16_t color, uint16_t bg_color) {
     int row_pos = 0;
 
     for (int i = 0; i < length; i++) {
@@ -1788,7 +1788,7 @@ STATIC void map_bitarray_to_rgb565(uint8_t const *bitarray, uint8_t *buffer, int
 ///         * ``color``: color of the bitarray (default: white)
 ///         * ``bg_color``: background color of the bitarray (default: black)
 
-STATIC mp_obj_t gc9a01_map_bitarray_to_rgb565(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_map_bitarray_to_rgb565(size_t n_args, const mp_obj_t *args) {
 
     mp_buffer_info_t bitarray_info;
     mp_buffer_info_t buffer_info;
@@ -1804,7 +1804,7 @@ STATIC mp_obj_t gc9a01_map_bitarray_to_rgb565(size_t n_args, const mp_obj_t *arg
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_map_bitarray_to_rgb565_obj, 3, 6, gc9a01_map_bitarray_to_rgb565);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_map_bitarray_to_rgb565_obj, 3, 6, gc9a01_map_bitarray_to_rgb565);
 
 
 //
@@ -1926,7 +1926,7 @@ static int out_slow(                                // 1:Ok, 0:Aborted
 ///             * ``JPG_MODE_FAST``: draw the entire image at once
 ///             * ``JPG_MODE_SLOW``: draw the image progressively by each Minimum Coded Unit
 
-STATIC mp_obj_t gc9a01_GC9A01_jpg(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_jpg(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     const char *filename = mp_obj_str_get_str(args[1]);
     mp_int_t x = mp_obj_get_int(args[2]);
@@ -2006,7 +2006,7 @@ STATIC mp_obj_t gc9a01_GC9A01_jpg(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_jpg_obj, 4, 5, gc9a01_GC9A01_jpg);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_jpg_obj, 4, 5, gc9a01_GC9A01_jpg);
 
 
 /// #### .polygon_center(`polygon`)
@@ -2018,7 +2018,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_jpg_obj, 4, 5, gc9a01_G
 ///     * **Returns:**
 ///         * ``(x, y)``: tuple of the center of the polygon
 
-STATIC mp_obj_t gc9a01_GC9A01_polygon_center(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_polygon_center(size_t n_args, const mp_obj_t *args) {
     size_t poly_len;
     mp_obj_t *polygon;
 
@@ -2068,14 +2068,14 @@ STATIC mp_obj_t gc9a01_GC9A01_polygon_center(size_t n_args, const mp_obj_t *args
     return mp_obj_new_tuple(2, center);
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_polygon_center_obj, 2, 2, gc9a01_GC9A01_polygon_center);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_polygon_center_obj, 2, 2, gc9a01_GC9A01_polygon_center);
 
 
 //
 // RotatePolygon: Rotate a polygon around a center point angle radians
 //
 
-STATIC void RotatePolygon(Polygon *polygon, Point *center, mp_float_t angle) {
+static void RotatePolygon(Polygon *polygon, Point *center, mp_float_t angle) {
 
     // reject null polygons
     if (polygon == NULL || center == NULL || polygon->length == 0) {
@@ -2098,7 +2098,7 @@ STATIC void RotatePolygon(Polygon *polygon, Point *center, mp_float_t angle) {
 // Draw the polygon at the given x, y location rotated around cx, cy, angle degrees in the given color
 //
 
-STATIC void draw_polygon_outline(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, Polygon *polygon, uint16_t color) {
+static void draw_polygon_outline(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, Polygon *polygon, uint16_t color) {
 
     for (int idx = 1; idx < polygon->length; idx++) {
         line(self, x + (int)(polygon->points[idx - 1].x + MICROPY_FLOAT_CONST(0.5)), y + (int)(polygon->points[idx - 1].y + MICROPY_FLOAT_CONST(0.5)), x + (int)(polygon->points[idx].x + MICROPY_FLOAT_CONST(0.5)), y + (int)(polygon->points[idx].y + MICROPY_FLOAT_CONST(0.5)), color);
@@ -2121,7 +2121,7 @@ STATIC void draw_polygon_outline(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t
 ///         * ``cx``: x coordinate of the center of rotation (default: 0)
 ///         * ``cy``: y coordinate of the center of rotation (default: 0)
 
-STATIC mp_obj_t gc9a01_GC9A01_polygon(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_polygon(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     size_t poly_len;
     mp_obj_t *polygon;
@@ -2190,7 +2190,7 @@ STATIC mp_obj_t gc9a01_GC9A01_polygon(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_polygon_obj, 4, 8, gc9a01_GC9A01_polygon);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_polygon_obj, 4, 8, gc9a01_GC9A01_polygon);
 
 
 //
@@ -2200,7 +2200,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_polygon_obj, 4, 8, gc9a
 
 #define MAX_POLY_CORNERS 32
 
-STATIC void PolygonFill(gc9a01_GC9A01_obj_t *self, Polygon *polygon, Point location, uint16_t color) {
+static void PolygonFill(gc9a01_GC9A01_obj_t *self, Polygon *polygon, Point location, uint16_t color) {
     int nodes, nodeX[MAX_POLY_CORNERS], pixelY, i, j, swap;
     int minX = INT_MAX;
     int maxX = INT_MIN;
@@ -2283,7 +2283,7 @@ STATIC void PolygonFill(gc9a01_GC9A01_obj_t *self, Polygon *polygon, Point locat
 ///         * ``cx``: x coordinate of the center of rotation (default: 0)
 ///         * ``cy``: y coordinate of the center of rotation (default: 0)
 
-STATIC mp_obj_t gc9a01_GC9A01_fill_polygon(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_fill_polygon(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     size_t poly_len;
     mp_obj_t *polygon;
@@ -2351,7 +2351,7 @@ STATIC mp_obj_t gc9a01_GC9A01_fill_polygon(size_t n_args, const mp_obj_t *args) 
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_polygon_obj, 4, 8, gc9a01_GC9A01_fill_polygon);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_polygon_obj, 4, 8, gc9a01_GC9A01_fill_polygon);
 
 
 void draw_arc(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, int16_t start_angle_degrees, int16_t end_angle_degrees, uint16_t segments, uint16_t radius_x, uint16_t radius_y, uint16_t arc_width, uint16_t color) {
@@ -2411,7 +2411,7 @@ void draw_arc(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, int16_t start_a
 ///         * ``w``: width of the arc (currently limited to 1)
 ///         * ``color``: color of the arc
 
-STATIC mp_obj_t gc9a01_GC9A01_arc(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_arc(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x = mp_obj_get_int(args[1]);
     mp_int_t y = mp_obj_get_int(args[2]);
@@ -2427,7 +2427,7 @@ STATIC mp_obj_t gc9a01_GC9A01_arc(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_arc_obj, 10, 10, gc9a01_GC9A01_arc);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_arc_obj, 10, 10, gc9a01_GC9A01_arc);
 
 
 void draw_filled_arc(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, int16_t start_angle_degrees, int16_t end_angle_degrees, uint16_t segments, uint16_t radius_x, uint16_t radius_y, uint16_t color) {
@@ -2508,7 +2508,7 @@ void draw_filled_arc(gc9a01_GC9A01_obj_t *self, uint16_t x, uint16_t y, int16_t 
 ///         * ``ry``: y radius of the arc
 ///         * ``color``: color of the arc
 
-STATIC mp_obj_t gc9a01_GC9A01_fill_arc(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_fill_arc(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_int_t x = mp_obj_get_int(args[1]);
     mp_int_t y = mp_obj_get_int(args[2]);
@@ -2524,7 +2524,7 @@ STATIC mp_obj_t gc9a01_GC9A01_fill_arc(size_t n_args, const mp_obj_t *args) {
     return mp_const_none;
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_arc_obj, 9, 9, gc9a01_GC9A01_fill_arc);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_arc_obj, 9, 9, gc9a01_GC9A01_fill_arc);
 
 
 /// #### .bounding({`status` {, `as_rect`}})
@@ -2537,7 +2537,7 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_fill_arc_obj, 9, 9, gc9
 ///     * **Returns:**
 ///         * ``(x, y, w, h)``:  tuple of the bounding box or (min_x, min_y, width, height) if as_rect parameter is True
 
-STATIC mp_obj_t gc9a01_GC9A01_bounding(size_t n_args, const mp_obj_t *args) {
+static mp_obj_t gc9a01_GC9A01_bounding(size_t n_args, const mp_obj_t *args) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(args[0]);
     mp_obj_t bounds[4] = {
         mp_obj_new_int(self->min_x), mp_obj_new_int(self->min_y), (n_args > 2 && mp_obj_is_true(args[2])) ? mp_obj_new_int(self->max_x - self->min_x + 1) : mp_obj_new_int(self->max_x), (n_args > 2 && mp_obj_is_true(args[2])) ? mp_obj_new_int(self->max_y - self->min_y + 1) : mp_obj_new_int(self->max_y)
@@ -2558,10 +2558,10 @@ STATIC mp_obj_t gc9a01_GC9A01_bounding(size_t n_args, const mp_obj_t *args) {
     return mp_obj_new_tuple(4, bounds);
 }
 
-STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_bounding_obj, 1, 3, gc9a01_GC9A01_bounding);
+static MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(gc9a01_GC9A01_bounding_obj, 1, 3, gc9a01_GC9A01_bounding);
 
 
-STATIC mp_obj_t gc9a01_GC9A01_init(mp_obj_t self_in) {
+static mp_obj_t gc9a01_GC9A01_init(mp_obj_t self_in) {
     gc9a01_GC9A01_obj_t *self = MP_OBJ_TO_PTR(self_in);
 
     gc9a01_GC9A01_hard_reset(self_in);
@@ -2638,7 +2638,7 @@ STATIC mp_obj_t gc9a01_GC9A01_init(mp_obj_t self_in) {
 MP_DEFINE_CONST_FUN_OBJ_1(gc9a01_GC9A01_init_obj, gc9a01_GC9A01_init);
 
 // *FORMAT-OFF*
-STATIC const mp_rom_map_elem_t gc9a01_GC9A01_locals_dict_table[] = {
+static const mp_rom_map_elem_t gc9a01_GC9A01_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_write), MP_ROM_PTR(&gc9a01_GC9A01_write_obj) },
     { MP_ROM_QSTR(MP_QSTR_write_len), MP_ROM_PTR(&gc9a01_GC9A01_write_len_obj) },
     { MP_ROM_QSTR(MP_QSTR_hard_reset), MP_ROM_PTR(&gc9a01_GC9A01_hard_reset_obj) },
@@ -2679,7 +2679,7 @@ STATIC const mp_rom_map_elem_t gc9a01_GC9A01_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_fill_polygon), MP_ROM_PTR(&gc9a01_GC9A01_fill_polygon_obj)},
     { MP_ROM_QSTR(MP_QSTR_bounding), MP_ROM_PTR(&gc9a01_GC9A01_bounding_obj)},
 };
-STATIC MP_DEFINE_CONST_DICT(gc9a01_GC9A01_locals_dict, gc9a01_GC9A01_locals_dict_table);
+static MP_DEFINE_CONST_DICT(gc9a01_GC9A01_locals_dict, gc9a01_GC9A01_locals_dict_table);
 
 #if MICROPY_OBJ_TYPE_REPR == MICROPY_OBJ_TYPE_REPR_SLOT_INDEX
 MP_DEFINE_CONST_OBJ_TYPE(gc9a01_GC9A01_type, MP_QSTR_GC9A01, MP_TYPE_FLAG_NONE, print, gc9a01_GC9A01_print, make_new, gc9a01_GC9A01_make_new, locals_dict, &gc9a01_GC9A01_locals_dict);
@@ -2760,7 +2760,7 @@ mp_obj_t gc9a01_GC9A01_make_new(const mp_obj_type_t *type, size_t n_args, size_t
 }
 
 // *FORMAT-OFF*
-STATIC const mp_map_elem_t gc9a01_module_globals_table[] = {
+static const mp_map_elem_t gc9a01_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_OBJ_NEW_QSTR(MP_QSTR_gc9a01) },
     { MP_ROM_QSTR(MP_QSTR_color565), (mp_obj_t)&gc9a01_color565_obj },
     { MP_ROM_QSTR(MP_QSTR_map_bitarray_to_rgb565), (mp_obj_t)&gc9a01_map_bitarray_to_rgb565_obj },
@@ -2779,7 +2779,7 @@ STATIC const mp_map_elem_t gc9a01_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_WRAP_H), MP_ROM_INT(OPTIONS_WRAP_H)},
     { MP_ROM_QSTR(MP_QSTR_WRAP_V), MP_ROM_INT(OPTIONS_WRAP_V)}
 };
-STATIC MP_DEFINE_CONST_DICT(mp_module_gc9a01_globals, gc9a01_module_globals_table);
+static MP_DEFINE_CONST_DICT(mp_module_gc9a01_globals, gc9a01_module_globals_table);
 
 const mp_obj_module_t mp_module_gc9a01 = {
     .base = { &mp_type_module },

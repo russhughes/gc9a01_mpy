@@ -42,6 +42,10 @@
   - [WAVESHARE_RP2040_LCD_1.28](#waveshare_rp2040_lcd_1.28)
   - [WEACTSTUDIO](#weactstudio)
 
+## RP2350 firmware
+  - [RPI_PICO2](#rpi_pico2)
+  - [RPI_PICO2_W](#rpi_pico2_w)
+
 
 ### ARDUINO_NANO_ESP32
 
@@ -163,6 +167,12 @@
 
 ### RPI_PICO_W
    - [firmware.uf2](RPI_PICO_W/firmware.uf2)
+
+### RPI_PICO2
+   - [firmware.uf2](RPI_PICO2/firmware.uf2)
+
+### RPI_PICO2_W
+   - [firmware.uf2](RPI_PICO2_W/firmware.uf2)
 
 ### SPARKFUN_PROMICRO
    - [firmware.uf2](SPARKFUN_PROMICRO/firmware.uf2)

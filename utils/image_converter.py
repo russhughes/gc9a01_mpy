@@ -82,7 +82,7 @@ def main():
     bits = args.bits_per_pixel
     colors_requested = 1 << bits
     img = Image.open(args.image_file)
-    img = img.convert("P", palette=Image.Palette.ADAPTIVE, colors=colors_requested)
+    img = img.convert("P", palette=Image.ADAPTIVE, colors=colors_requested)
     palette = img.getpalette()  # Make copy of palette colors
     palette_colors = len(palette) // 3
     actual_colors = min(palette_colors, colors_requested)
